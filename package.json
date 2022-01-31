@@ -1,0 +1,32 @@
+{
+  "name": "proyecto2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard --fix ./api"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonathanpmelian/Proyecto2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jonathanpmelian/Proyecto2/issues"
+  },
+  "homepage": "https://github.com/jonathanpmelian/Proyecto2#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^15.0.0",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.1.9",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "standard": "^16.0.4"
+  }
+}
