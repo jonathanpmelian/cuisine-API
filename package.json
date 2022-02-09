@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon ./api/back/index.js",
     "test": "standard --fix ./api"
   },
   "repository": {
