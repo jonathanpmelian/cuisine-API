@@ -7,7 +7,7 @@ const {
 
 const checkAuth = require('../utils/index')
 
-router.post('/login', checkAuth, login)
+router.post('/login', login)
 router.post('/signup', signup)
 
 router.get('/check', checkAuth, (req, res) => {

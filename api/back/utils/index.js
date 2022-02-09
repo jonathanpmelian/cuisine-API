@@ -12,7 +12,7 @@ async function checkAuth (req, res, next) {
 
       if (!user) return res.status(500).send('Token not valid')
       else {
-        res.locals.user = { email: user.email }
+        res.locals.user = user
         next()
       }
     })
