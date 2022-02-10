@@ -26,7 +26,7 @@ const mongoose = require('mongoose')
     const PORT = process.env.PORT || 8080
     app.listen(PORT, (err) => {
       if (err) {
-        throw new Error(err)
+        console.log(err)
       }
       console.info('>'.repeat(40))
       console.info('🧑‍🍳  Cuisine Server Live')
@@ -34,6 +34,6 @@ const mongoose = require('mongoose')
       console.info('>'.repeat(40) + '\n')
     })
   } catch (err) {
-    throw new Error(err)
+    console.log(err)
   }
 })()
