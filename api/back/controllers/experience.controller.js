@@ -14,7 +14,9 @@ async function addExperience (req, res) {
 
 async function viewAllExperiences (req, res) {
   try {
-    const experiences = await ShopModel.find()
+    const experiences = await ShopModel.find({
+      category: 'experience'
+    })
 
     res.status(200).json(experiences)
   } catch (err) {

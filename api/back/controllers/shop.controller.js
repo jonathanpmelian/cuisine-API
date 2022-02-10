@@ -14,7 +14,9 @@ async function addProduct (req, res) {
 
 async function viewAllProducts (req, res) {
   try {
-    const products = await ShopModel.find()
+    const products = await ShopModel.find({
+      category: 'article'
+    })
 
     res.status(200).json(products)
   } catch (err) {

@@ -2,7 +2,9 @@ const ShopModel = require('../models/product.model')
 
 async function getTakeAway (req, res) {
   try {
-    const products = await ShopModel.find()
+    const products = await ShopModel.find({
+      category: 'food'
+    })
     res.status(200).json(products)
   } catch (err) {
     console.error(err)
