@@ -3,7 +3,7 @@ const router = require('express').Router()
 const {
   checkAuth,
   checkAdmin
-}  = require('../utils/index')
+} = require('../utils/index')
 
 const {
   addProduct,
