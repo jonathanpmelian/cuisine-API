@@ -17,7 +17,9 @@ const shopSchema = new mongoose.Schema({
     type: Number
   },
   category: {
-    type: String
+    type: String,
+    required: true,
+    enum: ['article', 'food', 'experience']
   },
   supplier: {
     type: String
