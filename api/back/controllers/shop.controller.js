@@ -30,7 +30,7 @@ async function viewOneProduct (req, res) {
     res.status(200).json(product)
   } catch (err) {
     console.error(err)
-    res.status(500).send(`Error showing products: ${err}`)
+    res.status(500).send(`Error showing product: ${err}`)
   }
 }
 
@@ -44,7 +44,7 @@ async function updateOneProduct (req, res) {
     res.status(200).json(product)
   } catch (err) {
     console.error(err)
-    res.status(500).send(`Error showing products: ${err}`)
+    res.status(500).send(`Error updating product: ${err}`)
   }
 }
 
@@ -55,7 +55,7 @@ async function deleteProduct (req, res) {
     res.status(200).send('Product has been deleted')
   } catch (err) {
     console.error(err)
-    res.status(500).send(`Error showing products: ${err}`)
+    res.status(500).send(`Error deleting product: ${err}`)
   }
 }
 
