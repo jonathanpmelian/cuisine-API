@@ -16,7 +16,7 @@ const {
 router.post('/', checkAuth, checkAdmin, addProduct)
 router.get('/', viewAllProducts)
 router.get('/:productId', viewOneProduct)
-router.put('/:productId', updateOneProduct)
-router.delete('/:productId', deleteProduct)
+router.put('/:productId', checkAuth, checkAdmin, updateOneProduct)
+router.delete('/:productId', checkAuth, checkAdmin, deleteProduct)
 
 module.exports = router
