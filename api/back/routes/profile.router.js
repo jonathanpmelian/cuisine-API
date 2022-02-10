@@ -6,7 +6,10 @@ const {
   deleteProfile
 } = require('../controllers/profile.controller')
 
-const checkAuth = require('../utils/index')
+const {
+  checkAuth,
+  checkAdmin
+} = require('../utils/index')
 
 router.get('/', checkAuth, getProfile)
 router.put('/', checkAuth, editProfile)
