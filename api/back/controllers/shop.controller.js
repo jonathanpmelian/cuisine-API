@@ -1,6 +1,6 @@
 const ShopModel = require('../models/product.model')
 
-async function addProduct (req, res) {
+async function createArticle (req, res) {
   try {
     const product = await ShopModel.create(req.body)
     await product.save()
@@ -12,7 +12,7 @@ async function addProduct (req, res) {
   }
 }
 
-async function viewAllProducts (req, res) {
+async function showAllArticles (req, res) {
   try {
     const products = await ShopModel.find({
       category: 'article'
@@ -25,7 +25,7 @@ async function viewAllProducts (req, res) {
   }
 }
 
-async function viewOneProduct (req, res) {
+async function showOneArticle (req, res) {
   try {
     const product = await ShopModel.findById(req.params.productId)
 
@@ -36,7 +36,7 @@ async function viewOneProduct (req, res) {
   }
 }
 
-async function updateOneProduct (req, res) {
+async function editOneArticle (req, res) {
   try {
     const product = await ShopModel.findByIdAndUpdate(req.params.productId, req.body, {
       new: true
@@ -50,7 +50,7 @@ async function updateOneProduct (req, res) {
   }
 }
 
-async function deleteProduct (req, res) {
+async function deleteOneArticle (req, res) {
   try {
     await ShopModel.findByIdAndDelete(req.params.productId)
 
@@ -62,9 +62,9 @@ async function deleteProduct (req, res) {
 }
 
 module.exports = {
-  addProduct,
-  viewAllProducts,
-  viewOneProduct,
-  updateOneProduct,
-  deleteProduct
+  createArticle,
+  showAllArticles,
+  showOneArticle,
+  editOneArticle,
+  deleteOneArticle
 }

@@ -1,18 +1,22 @@
 const router = require('express').Router()
 
 const {
-  getProfile,
-  editProfile,
-  deleteProfile
-} = require('../controllers/profile.controller')
-
-const {
   checkAuth,
   checkAdmin
 } = require('../utils/index')
 
-router.get('/', checkAuth, getProfile)
-router.put('/', checkAuth, editProfile)
-router.delete('/', checkAuth, deleteProfile)
+const {
+  viewMyProfile,
+  editMyProfile,
+  deleteMyProfile
+} = require('../controllers/profile.controller')
+
+const addressRouter = require('./address.router')
+
+router.use('/address', addressRouter)
+
+router.get('/', checkAuth, viewMyProfile)
+router.put('/', checkAuth, editMyProfile)
+router.delete('/', checkAuth, deleteMyProfile)
 
 module.exports = router

@@ -6,17 +6,17 @@ const {
 } = require('../utils/index')
 
 const {
-  addProduct,
-  viewAllProducts,
-  viewOneProduct,
-  updateOneProduct,
-  deleteProduct
+  createArticle,
+  showAllArticles,
+  showOneArticle,
+  editOneArticle,
+  deleteOneArticle
 } = require('../controllers/shop.controller')
 
-router.post('/', checkAuth, checkAdmin, addProduct)
-router.get('/', viewAllProducts)
-router.get('/:productId', viewOneProduct)
-router.put('/:productId', checkAuth, checkAdmin, updateOneProduct)
-router.delete('/:productId', checkAuth, checkAdmin, deleteProduct)
+router.post('/', checkAuth, checkAdmin, createArticle)
+router.get('/', showAllArticles)
+router.get('/:productId', showOneArticle)
+router.put('/:productId', checkAuth, checkAdmin, editOneArticle)
+router.delete('/:productId', checkAuth, checkAdmin, deleteOneArticle)
 
 module.exports = router

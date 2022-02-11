@@ -1,18 +1,22 @@
 const router = require('express').Router()
 
-const { checkAuth, checkAdmin } = require('../utils')
+const { 
+  checkAuth, 
+  checkAdmin 
+} = require('../utils')
+
 const {
-  addExperience,
-  viewAllExperiences,
-  viewOneExperience,
-  updateOneExperience,
-  deleteExperience
+  createExperience,
+  showAllExperiences,
+  showOneExperience,
+  editOneExperience,
+  deleteOneExperience
 } = require('../controllers/experience.controller')
 
-router.post('/', checkAuth, checkAdmin, addExperience)
-router.get('/', viewAllExperiences)
-router.get('/:productId', viewOneExperience)
-router.put('/:productId', checkAuth, checkAdmin, updateOneExperience)
-router.delete('/:productId', checkAuth, checkAdmin, deleteExperience)
+router.post('/', checkAuth, checkAdmin, createExperience)
+router.get('/', showAllExperiences)
+router.get('/:productId', showOneExperience)
+router.put('/:productId', checkAuth, checkAdmin, editOneExperience)
+router.delete('/:productId', checkAuth, checkAdmin, deleteOneExperience)
 
 module.exports = router
