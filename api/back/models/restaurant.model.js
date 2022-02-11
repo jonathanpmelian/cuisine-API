@@ -39,6 +39,10 @@ const restaurantSchema = new mongoose.Schema({
   },
   menu: {
     type: String
+  },
+  reservation: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'reservation'
   }
 })
 
