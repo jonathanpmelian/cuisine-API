@@ -56,10 +56,23 @@ async function deleteOneRestaurant (req, res) {
   }
 }
 
+async function showMenu (req, res) {
+  try {
+    const restaurant = await RestaurantModel.findById(req.params.restaurantId)
+    res.status(200).json(restaurant.menu)
+  } catch (err) {
+    console.error(err)
+    res.status(500).send('Error showing restaurant menu')
+  }
+}
+
+
+
 module.exports = { 
   createRestaurant, 
   showAllRestaurants, 
   showOneRestaurant, 
   editOneRestaurant, 
-  deleteOneRestaurant 
+  deleteOneRestaurant,
+  showMenu
 }

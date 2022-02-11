@@ -2,15 +2,15 @@ const mongoose = require('mongoose')
 
 const reservationSchema = new mongoose.Schema({
     day: {
-        type: String,
+        type: Number,
         require: [true, 'Day is required']
     },
     hour: {
-        type: Number,
+        type: String,
         require: [true, 'Hour is required']
     },
     month: {
-        type: Number,
+        type: String,
         require: [true, 'Month is required']
     },
     year: {
@@ -37,7 +37,12 @@ const reservationSchema = new mongoose.Schema({
     },
     restaurant: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'restaurant'
+        ref: 'restaurant',
+        require: [true, "Restaurant is required"]
+    },
+    validUntil: {
+        type: Date,
+        default: () => Date.now() +  60 * 60 * 1000 // 1 hours from now
     }
 })
 
