@@ -1,4 +1,3 @@
-
 const RestaurantModel = require('../models/restaurant.model')
 
 async function createRestaurant (req, res) {

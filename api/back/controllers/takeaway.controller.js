@@ -1,8 +1,8 @@
-const ShopModel = require('../models/product.model')
+const TakeawayModel = require('../models/takeaway.model')
 
 async function showAllTakeaway (req, res) {
   try {
-    const products = await ShopModel.find({
+    const products = await ll.find({
       category: 'food'
     })
     res.status(200).json(products)
@@ -14,7 +14,7 @@ async function showAllTakeaway (req, res) {
 
 async function showOneTakeaway (req, res) {
   try {
-    const products = await ShopModel.findById(req.params.productId)
+    const products = await TakeawayModel.findById(req.params.productId)
     res.status(200).json(products)
   } catch (err) {
     console.error(err)
@@ -24,7 +24,7 @@ async function showOneTakeaway (req, res) {
 
 async function createTakeaway (req, res) {
   try {
-    const products = await ShopModel.create(req.body)
+    const products = await TakeawayModel.create(req.body)
     await products.save()
     res.status(200).json(products)
   } catch (err) {
@@ -35,7 +35,7 @@ async function createTakeaway (req, res) {
 
 async function editOneTakeaway (req, res) {
   try {
-    const products = await ShopModel.findByIdAndUpdate(req.params.productId, req.body, { new: true })
+    const products = await TakeawayModel.findByIdAndUpdate(req.params.productId, req.body, { new: true })
     res.status(200).json(products)
   } catch (err) {
     console.error(err)
@@ -45,7 +45,7 @@ async function editOneTakeaway (req, res) {
 
 async function deleteOneTakeaway (req, res) {
   try {
-    await ShopModel.findByIdAndDelete(req.params.productId)
+    await TakeawayMode.findByIdAndDelete(req.params.productId)
     res.status(200).json('Product has been deleted')
   } catch (err) {
     console.error(err)

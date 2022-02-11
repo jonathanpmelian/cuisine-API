@@ -1,8 +1,8 @@
-const ShopModel = require('../models/product.model')
+const ExperienceModel = require('../models/experience.model')
 
 async function createExperience (req, res) {
   try {
-    const experience = await ShopModel.create(req.body)
+    const experience = await ExperienceModel.create(req.body)
     await experience.save()
 
     res.status(200).json(experience)
@@ -14,7 +14,7 @@ async function createExperience (req, res) {
 
 async function showAllExperiences (req, res) {
   try {
-    const experiences = await ShopModel.find({
+    const experiences = await ExperienceModel.find({
       category: 'experience'
     })
 
@@ -27,7 +27,7 @@ async function showAllExperiences (req, res) {
 
 async function showOneExperience (req, res) {
   try {
-    const experience = await ShopModel.findById(req.params.productId)
+    const experience = await ExperienceModel.findById(req.params.productId)
 
     res.status(200).json(experience)
   } catch (err) {
@@ -38,7 +38,7 @@ async function showOneExperience (req, res) {
 
 async function editOneExperience (req, res) {
   try {
-    const product = await ShopModel.findByIdAndUpdate(req.params.productId, req.body, {
+    const product = await ExperienceModel.findByIdAndUpdate(req.params.productId, req.body, {
       new: true
     })
 
@@ -51,7 +51,7 @@ async function editOneExperience (req, res) {
 
 async function deleteOneExperience (req, res) {
   try {
-    await ShopModel.findByIdAndDelete(req.params.productId)
+    await ExperienceModel.findByIdAndDelete(req.params.productId)
 
     res.status(200).send('Product has been deleted')
   } catch (err) {
