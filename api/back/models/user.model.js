@@ -36,12 +36,12 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, 'Password is required'],
-    validate: {
-      validator: function (v) {
-        return (/^(?=.*\d)(?=.*[a-z])(?=.*[a-zA-Z]).{8,}$/).test(v)
-      },
-      message: 'Password must be 8 characters and include at least 1 digit'
-    }
+    // validate: {
+    //   validator: function (v) {
+    //     return (/^(?=.*\d)(?=.*[a-z])(?=.*[a-zA-Z]).{8,}$/).test(v)
+    //   },
+    //   message: 'Password must be 8 characters and include at least 1 digit'
+    // }
   },
   phone: {
     type: String,
