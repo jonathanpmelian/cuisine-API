@@ -5,6 +5,7 @@ async function createRestaurant (req, res) {
   try {
     const restaurant = await RestaurantModel.create(req.body)
     await restaurant.save()
+    
     res.status(200).json(restaurant)
   } catch (err) {
     console.error(err)
@@ -12,9 +13,10 @@ async function createRestaurant (req, res) {
   }
 }
 
-async function getAllRestaurants (req, res) {
+async function showAllRestaurants (req, res) {
   try {
     const restaurant = await RestaurantModel.find()
+
     res.status(200).json(restaurant)
   } catch (err) {
     console.error(err)
@@ -22,9 +24,10 @@ async function getAllRestaurants (req, res) {
   }
 }
 
-async function getOneRestaurant (req, res) {
+async function showOneRestaurant (req, res) {
   try {
     const restaurant = await RestaurantModel.findById(req.params.restaurantId)
+
     res.status(200).json(restaurant)
   } catch (err) {
     console.error(err)
@@ -32,9 +35,10 @@ async function getOneRestaurant (req, res) {
   }
 }
 
-async function editRestaurant (req, res) {
+async function editOneRestaurant (req, res) {
   try {
     const restaurant = await RestaurantModel.findByIdAndUpdate(req.params.restaurantId, req.body, { new: true })
+
     res.status(200).json(restaurant)
   } catch (err) {
     console.error(err)
@@ -42,9 +46,10 @@ async function editRestaurant (req, res) {
   }
 }
 
-async function deleteRestaurant (req, res) {
+async function deleteOneRestaurant (req, res) {
   try {
     await RestaurantModel.findByIdAndDelete(req.params.restaurantId)
+
     res.status(200).json('Restaurant has been deleted')
   } catch (err) {
     console.error(err)
@@ -52,4 +57,10 @@ async function deleteRestaurant (req, res) {
   }
 }
 
-module.exports = { createRestaurant, getAllRestaurants, getOneRestaurant, editRestaurant, deleteRestaurant }
+module.exports = { 
+  createRestaurant, 
+  showAllRestaurants, 
+  showOneRestaurant, 
+  editOneRestaurant, 
+  deleteOneRestaurant 
+}

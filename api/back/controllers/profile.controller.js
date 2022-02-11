@@ -1,8 +1,8 @@
 const UserModel = require('../models/user.model')
 
-async function getProfile (req, res) {
+async function viewMyProfile (req, res) {
   try {
-    const user = await UserModel.findById(res.locals.user.id)
+    const user = await UserModel.findById(res.locals.user.id, { password: 0, role: 0, address: 0, order: 0, reservation: 0, __v: 0})
     res.status(200).json(user)
   } catch (err) {
     console.error(err)
@@ -10,7 +10,7 @@ async function getProfile (req, res) {
   }
 }
 
-async function editProfile (req, res) {
+async function editMyProfile (req, res) {
   try {
     const user = await UserModel.findByIdAndUpdate(res.locals.user.id, req.body, {
       new: true
@@ -23,7 +23,7 @@ async function editProfile (req, res) {
   }
 }
 
-async function deleteProfile (req, res) {
+async function deleteMyProfile (req, res) {
   try {
     await UserModel.findByIdAndDelete(res.locals.user.id)
     res.status(200).send('User has been deleted')
@@ -34,7 +34,7 @@ async function deleteProfile (req, res) {
 }
 
 module.exports = {
-  getProfile,
-  editProfile,
-  deleteProfile
+  viewMyProfile,
+  editMyProfile,
+  deleteMyProfile
 }

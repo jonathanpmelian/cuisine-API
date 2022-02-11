@@ -1,6 +1,6 @@
 const ShopModel = require('../models/product.model')
 
-async function getTakeAway (req, res) {
+async function showAllTakeaway (req, res) {
   try {
     const products = await ShopModel.find({
       category: 'food'
@@ -12,7 +12,7 @@ async function getTakeAway (req, res) {
   }
 }
 
-async function getOneTakeAway (req, res) {
+async function showOneTakeaway (req, res) {
   try {
     const products = await ShopModel.findById(req.params.productId)
     res.status(200).json(products)
@@ -22,7 +22,7 @@ async function getOneTakeAway (req, res) {
   }
 }
 
-async function addTakeAway (req, res) {
+async function createTakeaway (req, res) {
   try {
     const products = await ShopModel.create(req.body)
     await products.save()
@@ -33,7 +33,7 @@ async function addTakeAway (req, res) {
   }
 }
 
-async function editTakeAway (req, res) {
+async function editOneTakeaway (req, res) {
   try {
     const products = await ShopModel.findByIdAndUpdate(req.params.productId, req.body, { new: true })
     res.status(200).json(products)
@@ -43,7 +43,7 @@ async function editTakeAway (req, res) {
   }
 }
 
-async function deleteTakeAway (req, res) {
+async function deleteOneTakeaway (req, res) {
   try {
     await ShopModel.findByIdAndDelete(req.params.productId)
     res.status(200).json('Product has been deleted')
@@ -53,4 +53,9 @@ async function deleteTakeAway (req, res) {
   }
 }
 
-module.exports = { getTakeAway, addTakeAway, editTakeAway, deleteTakeAway, getOneTakeAway }
+module.exports = { showAllTakeaway, 
+  showOneTakeaway, 
+  createTakeaway, 
+  editOneTakeaway, 
+  deleteOneTakeaway
+}

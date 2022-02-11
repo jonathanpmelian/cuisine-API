@@ -1,6 +1,6 @@
 const ShopModel = require('../models/product.model')
 
-async function addExperience (req, res) {
+async function createExperience (req, res) {
   try {
     const experience = await ShopModel.create(req.body)
     await experience.save()
@@ -12,7 +12,7 @@ async function addExperience (req, res) {
   }
 }
 
-async function viewAllExperiences (req, res) {
+async function showAllExperiences (req, res) {
   try {
     const experiences = await ShopModel.find({
       category: 'experience'
@@ -25,7 +25,7 @@ async function viewAllExperiences (req, res) {
   }
 }
 
-async function viewOneExperience (req, res) {
+async function showOneExperience (req, res) {
   try {
     const experience = await ShopModel.findById(req.params.productId)
 
@@ -36,7 +36,7 @@ async function viewOneExperience (req, res) {
   }
 }
 
-async function updateOneExperience (req, res) {
+async function editOneExperience (req, res) {
   try {
     const product = await ShopModel.findByIdAndUpdate(req.params.productId, req.body, {
       new: true
@@ -49,7 +49,7 @@ async function updateOneExperience (req, res) {
   }
 }
 
-async function deleteExperience (req, res) {
+async function deleteOneExperience (req, res) {
   try {
     await ShopModel.findByIdAndDelete(req.params.productId)
 
@@ -61,9 +61,9 @@ async function deleteExperience (req, res) {
 }
 
 module.exports = {
-  addExperience,
-  viewAllExperiences,
-  viewOneExperience,
-  updateOneExperience,
-  deleteExperience
+  createExperience,
+  showAllExperiences,
+  showOneExperience,
+  editOneExperience,
+  deleteOneExperience
 }
