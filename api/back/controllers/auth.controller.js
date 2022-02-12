@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 async function signup (req, res) {
   try {
     req.body.password = bcrypt.hashSync(req.body.password, parseInt(process.env.SALTROUNDS))
-    
+
     const user = await UserModel.create(req.body)
 
     const token = jwt.sign({ email: user.email }, process.env.SECRET, { expiresIn: '20d' })

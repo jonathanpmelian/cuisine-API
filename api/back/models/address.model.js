@@ -8,7 +8,7 @@ const addressSchema = new mongoose.Schema({
       validator: function (v) {
         return (/\b([A-ZÀ-ÿ][-,a-z. '\\ ]{1,85})/).test(v)
       },
-      message: 'Invalid street name'
+      message: 'Invalid street name. First letter uppercase.'
     }
   },
   phone: {
@@ -38,7 +38,7 @@ const addressSchema = new mongoose.Schema({
       validator: function (v) {
         return (/\b([A-ZÀ-ÿ][-,a-z. '\\ ]{1,85})/).test(v)
       },
-      message: 'Invalid city name'
+      message: 'Invalid city name. First letter uppercase.'
     }
   },
   name: {
@@ -48,7 +48,7 @@ const addressSchema = new mongoose.Schema({
       validator: function (v) {
         return (/\b([A-ZÀ-ÿ][-,a-z. '\\ ]{2,13})/).test(v)
       },
-      message: 'Name should be between 2 and 13 characters'
+      message: 'Name should be between 2 and 13 characters. First letter uppercase.'
     }
   },
   surname: {
@@ -58,7 +58,7 @@ const addressSchema = new mongoose.Schema({
       validator: function (v) {
         return (/\b([A-ZÀ-ÿ][-,a-z. '\\ ]{2,13})/).test(v)
       },
-      message: 'Surname should be between 2 and 13 characters'
+      message: 'Surname should be between 2 and 13 characters. First letter uppercase.'
     }
   },
   country: {
@@ -68,7 +68,7 @@ const addressSchema = new mongoose.Schema({
       validator: function (v) {
         return (/\b([A-ZÀ-ÿ][-,a-z. '\\ ]{4,56})/).test(v)
       },
-      message: 'Invalid country name'
+      message: 'Invalid country name. First letter uppercase.'
     }
   },
   province: {
@@ -77,7 +77,7 @@ const addressSchema = new mongoose.Schema({
       validator: function (v) {
         return (/\b([A-ZÀ-ÿ][-,a-z. '\\ ]{1,85})/).test(v)
       },
-      message: 'Invalid province name'
+      message: 'Invalid province name. First letter uppercase.'
     }
   }
 })

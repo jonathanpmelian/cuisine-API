@@ -7,12 +7,12 @@ const {
 
 const {
   showAllUsers,
-  editOneUserRole, 
+  editOneUserRole,
   deleteOneUserProfile
-}= require('../controllers/users.controller')
+} = require('../controllers/users.controller')
 
 router.get('/', checkAuth, checkAdmin, showAllUsers)
-router.put('/:userId', checkAuth, checkAdmin, editOneUserRole )
+router.put('/:userId', checkAuth, checkAdmin, editOneUserRole)
 router.delete('/:userId', checkAuth, checkAdmin, deleteOneUserProfile)
 
 module.exports = router

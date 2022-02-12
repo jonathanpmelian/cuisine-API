@@ -14,9 +14,7 @@ async function createArticle (req, res) {
 
 async function showAllArticles (req, res) {
   try {
-    const products = await ShopModel.find({
-      category: 'article'
-    })
+    const products = await ShopModel.find()
 
     res.status(200).json(products)
   } catch (err) {
@@ -39,7 +37,8 @@ async function showOneArticle (req, res) {
 async function editOneArticle (req, res) {
   try {
     const product = await ShopModel.findByIdAndUpdate(req.params.productId, req.body, {
-      new: true
+      new: true,
+      runValidators: true
     })
     await product.save()
 

@@ -1,6 +1,6 @@
 const UserModel = require('../models/user.model')
 
-async function createAddress(req, res) {
+async function createAddress (req, res) {
   try {
     const user = await UserModel.findById(res.locals.user.id, { password: 0, role: 0 })
     user.address.push(req.body)
@@ -26,7 +26,7 @@ async function showAllAddress (req, res) {
 
 async function showOneAddress (req, res) {
   try {
-    const user = await UserModel.findById(res.locals.user.id, { password: 0, role: 0})
+    const user = await UserModel.findById(res.locals.user.id, { password: 0, role: 0 })
     const address = user.address.id(req.params.addressId)
 
     res.status(200).json(address)
@@ -38,7 +38,7 @@ async function showOneAddress (req, res) {
 
 async function editOneAddress (req, res) {
   try {
-    const user = await UserModel.findById(res.locals.user.id, { password: 0, role: 0})
+    const user = await UserModel.findById(res.locals.user.id, { password: 0, role: 0 })
     const address = user.address.id(req.params.addressId)
     address.set(req.body)
     await user.save()
@@ -52,7 +52,7 @@ async function editOneAddress (req, res) {
 
 async function deleteOneAddress (req, res) {
   try {
-    const user = await UserModel.findById(res.locals.user.id, {password: 0, role: 0})
+    const user = await UserModel.findById(res.locals.user.id, { password: 0, role: 0 })
     user.address.remove(req.params.addressId)
 
     res.status(200).send('Address deleted correctly')

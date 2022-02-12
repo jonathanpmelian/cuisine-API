@@ -14,14 +14,12 @@ async function createExperience (req, res) {
 
 async function showAllExperiences (req, res) {
   try {
-    const experiences = await ExperienceModel.find({
-      category: 'experience'
-    })
+    const experiences = await ExperienceModel.find()
 
     res.status(200).json(experiences)
   } catch (err) {
     console.error(err)
-    res.status(500).send(`Error showing products: ${err}`)
+    res.status(500).send(`Error showing experiences: ${err}`)
   }
 }
 
@@ -32,20 +30,21 @@ async function showOneExperience (req, res) {
     res.status(200).json(experience)
   } catch (err) {
     console.error(err)
-    res.status(500).send(`Error showing product: ${err}`)
+    res.status(500).send(`Error showing experience: ${err}`)
   }
 }
 
 async function editOneExperience (req, res) {
   try {
     const product = await ExperienceModel.findByIdAndUpdate(req.params.productId, req.body, {
-      new: true
+      new: true,
+      runValidators: true
     })
 
     res.status(200).json(product)
   } catch (err) {
     console.error(err)
-    res.status(500).send(`Error updating product: ${err}`)
+    res.status(500).send(`Error updating experience: ${err}`)
   }
 }
 
@@ -53,10 +52,10 @@ async function deleteOneExperience (req, res) {
   try {
     await ExperienceModel.findByIdAndDelete(req.params.productId)
 
-    res.status(200).send('Product has been deleted')
+    res.status(200).send('Experience has been deleted')
   } catch (err) {
     console.error(err)
-    res.status(500).send(`Error deleting product: ${err}`)
+    res.status(500).send(`Error deleting experience: ${err}`)
   }
 }
 

@@ -1,8 +1,7 @@
 const router = require('express').Router()
 
 const {
-  checkAuth,
-  checkAdmin
+  checkAuth
 } = require('../utils/index')
 
 const {

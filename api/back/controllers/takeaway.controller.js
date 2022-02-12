@@ -2,23 +2,23 @@ const TakeawayModel = require('../models/takeaway.model')
 
 async function showAllTakeaway (req, res) {
   try {
-    const products = await ll.find({
-      category: 'food'
-    })
-    res.status(200).json(products)
+    const takeaways = await TakeawayModel.find()
+
+    res.status(200).json(takeaways)
   } catch (err) {
     console.error(err)
-    res.status(500).send(`Error showing takeaway products: ${err}`)
+    res.status(500).send(`Error showing takeaways: ${err}`)
   }
 }
 
 async function showOneTakeaway (req, res) {
   try {
-    const products = await TakeawayModel.findById(req.params.productId)
-    res.status(200).json(products)
+    const takeaway = await TakeawayModel.findById(req.params.productId)
+
+    res.status(200).json(takeaway)
   } catch (err) {
     console.error(err)
-    res.status(500).send(`Error showing one takeaway product: ${err}`)
+    res.status(500).send(`Error showing one takeaway: ${err}`)
   }
 }
 
@@ -26,36 +26,43 @@ async function createTakeaway (req, res) {
   try {
     const products = await TakeawayModel.create(req.body)
     await products.save()
+
     res.status(200).json(products)
   } catch (err) {
     console.error(err)
-    res.status(500).send(`Error adding takeaway product: ${err}`)
+    res.status(500).send(`Error adding takeaway: ${err}`)
   }
 }
 
 async function editOneTakeaway (req, res) {
   try {
-    const products = await TakeawayModel.findByIdAndUpdate(req.params.productId, req.body, { new: true })
+    const products = await TakeawayModel.findByIdAndUpdate(req.params.productId, req.body, {
+      new: true,
+      runValidators: true
+    })
+
     res.status(200).json(products)
   } catch (err) {
     console.error(err)
-    res.status(500).send(`Error modifing takeaway product: ${err}`)
+    res.status(500).send(`Error editing takeaway: ${err}`)
   }
 }
 
 async function deleteOneTakeaway (req, res) {
   try {
-    await TakeawayMode.findByIdAndDelete(req.params.productId)
-    res.status(200).json('Product has been deleted')
+    await TakeawayModel.findByIdAndDelete(req.params.productId)
+
+    res.status(200).json('Takeaway has been deleted')
   } catch (err) {
     console.error(err)
-    res.status(500).send(`Error deleting takeaway product: ${err}`)
+    res.status(500).send(`Error deleting takeaway: ${err}`)
   }
 }
 
-module.exports = { showAllTakeaway, 
-  showOneTakeaway, 
-  createTakeaway, 
-  editOneTakeaway, 
+module.exports = {
+  showAllTakeaway,
+  showOneTakeaway,
+  createTakeaway,
+  editOneTakeaway,
   deleteOneTakeaway
 }

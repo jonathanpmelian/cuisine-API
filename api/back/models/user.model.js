@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
       validator: function (v) {
         return (/\b([A-ZÀ-ÿ][-,a-z. '\\ ]{2,13})/).test(v)
       },
-      message: 'Name should be between 2 and 13 characters'
+      message: 'Name should be between 2 and 13 characters. First letter uppercase.'
     }
   },
   surname: {
@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
       validator: function (v) {
         return (/\b([A-ZÀ-ÿ][-,a-z. '\\ ]{2,13})/).test(v)
       },
-      message: 'Surname should be between 2 and 13 characters'
+      message: 'Surname should be between 2 and 13 characters. First letter uppercase.'
     }
   },
   email: {
@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, 'Password is required'],
+    required: [true, 'Password is required']
     // validate: {
     //   validator: function (v) {
     //     return (/^(?=.*\d)(?=.*[a-z])(?=.*[a-zA-Z]).{8,}$/).test(v)

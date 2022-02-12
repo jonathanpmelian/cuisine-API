@@ -1,6 +1,6 @@
-const router = require('express').Router({mergeParams: true})
+const router = require('express').Router({ mergeParams: true })
 
-const {checkAuth} = require('../utils')
+const { checkAuth } = require('../utils')
 
 const {
   createAddress,

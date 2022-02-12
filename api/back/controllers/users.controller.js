@@ -5,7 +5,7 @@ async function showAllUsers (req, res) {
     const user = await UserModel.find()
 
     res.status(200).json(user)
-  } catch (error) {
+  } catch (err) {
     console.error(err)
     res.status(500).send(`Error showing users: ${err}`)
   }
@@ -13,11 +13,12 @@ async function showAllUsers (req, res) {
 
 async function editOneUserRole (req, res) {
   try {
-    const user = await UserModel.findByIdAndUpdate(req.params.userId, {role: req.body.role}, {
-      new: true
+    const user = await UserModel.findByIdAndUpdate(req.params.userId, { role: req.body.role }, {
+      new: true,
+      runValidators: true
     })
     await user.save()
-    
+
     res.status(200).json(user)
   } catch (err) {
     console.error(err)
