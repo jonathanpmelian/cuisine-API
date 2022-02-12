@@ -6,11 +6,13 @@ async function createReservation (req, res) {
   try {
     const restaurant = await RestaurantModel.findById(req.params.restaurantId)
     req.body.restaurant = restaurant.id
+    const booking = await ReservationModel.create(req.body)
+    await booking.save()
 
-    const reservation = await ReservationModel.create(req.body)
-    await reservation.save()
+    restaurant.reservation.push(booking.id)
+    await restaurant.save()
 
-    res.status(200).json(reservation)
+    res.status(200).json(booking)
   } catch (err) {
     console.error(err)
     res.status(500).send('Error making a reservation')
@@ -19,7 +21,7 @@ async function createReservation (req, res) {
 
 async function showReservations (req, res) {
   try {
-    const reservation = await ReservationModel.find({ restaurant: req.params.restaurantId })
+    const reservation = await ReservationModel.find({ restaurant: req.params.restaurantId }).populate('restaurant')
 
     res.status(200).json(reservation)
   } catch (err) {

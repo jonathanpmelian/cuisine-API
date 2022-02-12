@@ -44,7 +44,7 @@ const reservationSchema = new mongoose.Schema({
   },
   validUntil: {
     type: Date,
-    default: () => Date.now() + 60 * 60 * 1000 // 1 hours from now
+    default: () => Date.now() + 60 * 60 * 1000
   }
 })
 

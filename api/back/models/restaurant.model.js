@@ -40,10 +40,10 @@ const restaurantSchema = new mongoose.Schema({
   menu: {
     type: String
   },
-  reservation: {
+  reservation: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'reservation'
-  }
+  }]
 })
 
 const RestaurantModel = mongoose.model('restaurant', restaurantSchema)

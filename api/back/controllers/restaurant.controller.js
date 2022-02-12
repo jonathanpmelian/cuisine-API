@@ -14,7 +14,7 @@ async function createRestaurant (req, res) {
 
 async function showAllRestaurants (req, res) {
   try {
-    const restaurant = await RestaurantModel.find()
+    const restaurant = await RestaurantModel.find().populate('reservation')
 
     res.status(200).json(restaurant)
   } catch (err) {

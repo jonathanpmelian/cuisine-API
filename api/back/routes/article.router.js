@@ -11,12 +11,12 @@ const {
   showOneArticle,
   editOneArticle,
   deleteOneArticle
-} = require('../controllers/shop.controller')
+} = require('../controllers/article.controller')
 
 router.post('/', checkAuth, checkAdmin, createArticle)
 router.get('/', showAllArticles)
-router.get('/:productId', showOneArticle)
-router.put('/:productId', checkAuth, checkAdmin, editOneArticle)
-router.delete('/:productId', checkAuth, checkAdmin, deleteOneArticle)
+router.get('/:articleId', showOneArticle)
+router.put('/:articleId', checkAuth, checkAdmin, editOneArticle)
+router.delete('/:articleId', checkAuth, checkAdmin, deleteOneArticle)
 
 module.exports = router
