@@ -43,7 +43,11 @@ const restaurantSchema = new mongoose.Schema({
   reservation: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'reservation'
-  }]
+  }],
+  capacity: {
+    type: Number,
+    required: [true, "Capaticy is required"]
+  }
 })
 
 const RestaurantModel = mongoose.model('restaurant', restaurantSchema)

@@ -6,11 +6,20 @@ async function createReservation (req, res) {
   try {
     const restaurant = await RestaurantModel.findById(req.params.restaurantId)
     req.body.restaurant = restaurant.id
+
+    //console.log(restaurant.reservation.reduce((c,p) => c.people + p))
+    
     const booking = await ReservationModel.create(req.body)
     await booking.save()
 
     restaurant.reservation.push(booking.id)
     await restaurant.save()
+
+    const user = await UserModel.findById(res.locals.user.id)
+    if(user) {
+      user.reservation.push(booking.id)
+      await user.save()
+    }
 
     res.status(200).json(booking)
   } catch (err) {
@@ -30,16 +39,16 @@ async function showReservations (req, res) {
   }
 }
 
-async function deleteReservation (req, res) {
-  try {
-    await ReservationModel.findByIdAndDelete(req.params.reservationId)
+//async function deleteReservation (req, res) {
+  //try {
+    //await ReservationModel.findByIdAndDelete(req.params.reservationId)
 
-    res.status(200).send('Reservation has been deleted')
-  } catch (err) {
-    console.error(err)
-    res.status(500).send('Error showing reservations')
-  }
-}
+    //res.status(200).send('Reservation has been deleted')
+  //} catch (err) {
+    //console.error(err)
+    //res.status(500).send('Error showing reservations')
+  //}
+//}
 
 async function editReservation (req, res) {
   try {
@@ -57,10 +66,18 @@ async function cancellReservation (req, res) {
   try {
     const user = await UserModel.findById(res.locals.user.id)
     const reservation = await ReservationModel.findById(req.params.reservationId)
-
-    if (user && Date.now() < reservation.validUntil) {
-      await RestaurantModel.findById(req.params.reservationId)
-      return res.status(200).json('Reservation has been deleted')
+    const restaurant = await RestaurantModel.findById(req.params.restaurantId)
+    if(user.role === "Admin" ) {
+      await ReservationModel.findByIdAndRemove(req.params.reservationId)
+      await user.save()
+      await restaurant.save()
+      return res.status(200).send('Reservation has been deleted')
+    } 
+    else if (user && Date.now() < reservation.validUntil) {
+      await ReservationModel.findByIdAndRemove(req.params.reservationId)
+      await user.save()
+      await restaurant.save()
+      return res.status(200).send('Reservation has been deleted')
     } else {
       res.status(200).send('You can not cancell')
     }
@@ -73,7 +90,7 @@ async function cancellReservation (req, res) {
 module.exports = {
   createReservation,
   showReservations,
-  deleteReservation,
+  //deleteReservation,
   editReservation,
   cancellReservation
 }
