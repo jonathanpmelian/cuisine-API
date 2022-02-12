@@ -4,15 +4,26 @@ const UserModel = require('../models/user.model')
 
 async function createReservation (req, res) {
   try {
-    const restaurant = await RestaurantModel.findById(req.params.restaurantId)
-    req.body.restaurant = restaurant.id
-    const booking = await ReservationModel.create(req.body)
-    await booking.save()
+    const taken = await ReservationModel.find(req.body)
+    if(!taken) {
+        const restaurant = await RestaurantModel.findById(req.params.restaurantId)
+        req.body.restaurant = restaurant.id
+        const booking = await ReservationModel.create(req.body)
+        await booking.save()
 
-    restaurant.reservation.push(booking.id)
-    await restaurant.save()
+        restaurant.reservation.push(booking.id)
+        await restaurant.save()
 
-    res.status(200).json(booking)
+        const user = await UserModel.findById(res.locals.user.id)
+        if (user) {
+            user.reservation.push(booking.id)
+            await user.save()
+        }
+
+        res.status(200).json(booking)
+    } else {
+        res.status(200).send('Date not available')
+    }
   } catch (err) {
     console.error(err)
     res.status(500).send('Error making a reservation')

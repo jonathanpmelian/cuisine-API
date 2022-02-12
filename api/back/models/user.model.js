@@ -62,7 +62,10 @@ const userSchema = new mongoose.Schema({
   },
   address: [addressSchema],
   order: [],
-  reservation: []
+  reservation: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'reservation'
+  }]
 })
 
 const UserModel = mongoose.model('user', userSchema)
