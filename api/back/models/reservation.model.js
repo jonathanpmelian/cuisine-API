@@ -7,27 +7,33 @@ const reservationSchema = new mongoose.Schema({
   },
   hour: {
     type: String,
-    require: [true, 'Hour is required']
+    require: [true, 'Hour is required'],
+    enum: {
+      values:['18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30'],
+      message: 'Invalid hour. Please try: 18:00, 18:30, 19:00, 19:30, 20:00, 20:30, 21:00, 21:30'
+    }
   },
   month: {
     type: String,
-    require: [true, 'Month is required']
+    require: [true, 'Month is required'],
+    min: 1,
+    max: 12
   },
   year: {
     type: Number,
-    require: [true, 'Month is required']
+    require: [true, 'Year is required']
   },
   dayOfTheWeek: {
     type: String,
     enum: {
-      values: ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
-      message: 'Sunday we are closed'
+      values: ['Monday', 'Tuesday', 'Wednesday', 'Thrusday', 'Friday', 'Saturday'],
+      message: 'We close on Sunday'
     },
     require: [true, 'dayOfTheWeek is required']
   },
   people: {
     type: Number,
-    require: [true, 'People is required']
+    require: [true, 'People is required'],
   },
   phone: {
     type: String,
@@ -44,7 +50,7 @@ const reservationSchema = new mongoose.Schema({
   },
   validUntil: {
     type: Date,
-    default: () => Date.now() + 60 * 60 * 1000
+    default: () => Date.now() + 60 * 60 * 1000 // 1 hour after reservation
   }
 })
 

@@ -61,7 +61,10 @@ const userSchema = new mongoose.Schema({
     default: 'Client'
   },
   address: [addressSchema],
-  order: [],
+  order: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'order'
+  }],
   reservation: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'reservation'

@@ -2,6 +2,7 @@ const RestaurantModel = require('../models/restaurant.model')
 
 async function createRestaurant (req, res) {
   try {
+    req.body.totalCapacity = req.body.hourCapacity*8 //Create restaurant totalCapacity
     const restaurant = await RestaurantModel.create(req.body)
     await restaurant.save()
 

@@ -4,25 +4,28 @@ const UserModel = require('../models/user.model')
 
 async function createReservation (req, res) {
   try {
-    const taken = await ReservationModel.find(req.body)
-    if(!taken) {
-        const restaurant = await RestaurantModel.findById(req.params.restaurantId)
-        req.body.restaurant = restaurant.id
-        const booking = await ReservationModel.create(req.body)
-        await booking.save()
+    const restaurant = await RestaurantModel.findById(req.params.restaurantId).populate('reservation')
+    req.body.restaurant = restaurant.id
 
-        restaurant.reservation.push(booking.id)
-        await restaurant.save()
+    const totalOccupation = restaurant.reservation.reduce((p, c) => c.people + p, 0) + req.body.people
+    const occupation = restaurant.reservation.reduce((p, c) => req.body.hour === c.hour ? c.people + p : p, 0) + req.body.people
+    
+    if(occupation < restaurant.hourCapacity &&  totalOccupation < restaurant.totalCapacity) {
+      const booking = await ReservationModel.create(req.body)
+      await booking.save()
 
-        const user = await UserModel.findById(res.locals.user.id)
-        if (user) {
-            user.reservation.push(booking.id)
-            await user.save()
-        }
+      restaurant.reservation.push(booking.id)
+      await restaurant.save()
 
-        res.status(200).json(booking)
+      const user = await UserModel.findById(res.locals.user.id)
+      if(user) {
+        user.reservation.push(booking.id)
+        await user.save()
+      }
+
+      res.status(200).json(booking)
     } else {
-        res.status(200).send('Date not available')
+      res.status(200).send('Ahora no se puede')
     }
   } catch (err) {
     console.error(err)
@@ -41,17 +44,6 @@ async function showReservations (req, res) {
   }
 }
 
-async function deleteReservation (req, res) {
-  try {
-    await ReservationModel.findByIdAndDelete(req.params.reservationId)
-
-    res.status(200).send('Reservation has been deleted')
-  } catch (err) {
-    console.error(err)
-    res.status(500).send('Error showing reservations')
-  }
-}
-
 async function editReservation (req, res) {
   try {
     const reservation = await ReservationModel.findByIdAndUpdate(req.params.reservationId, req.body, { new: true, runValidators: true })
@@ -64,14 +56,31 @@ async function editReservation (req, res) {
   }
 }
 
-async function cancellReservation (req, res) {
+async function deleteReservation (req, res) {
   try {
     const user = await UserModel.findById(res.locals.user.id)
     const reservation = await ReservationModel.findById(req.params.reservationId)
+    const restaurant = await RestaurantModel.findById(req.params.restaurantId)
+    const userIndex = user.reservation.findIndex(elem => elem._id.toString() === reservation.id)
+    const restaurantIndex = restaurant.reservation.findIndex(elem => elem._id.toString() === reservation.id)
+    
+    if(user.role === "Admin" ) {
+      user.reservation.splice(userIndex, 1)
+      restaurant.reservation.splice(restaurantIndex, 1)
+      await ReservationModel.findByIdAndRemove(req.params.reservationId)
+      await user.save()
+      await restaurant.save()
 
-    if (user && Date.now() < reservation.validUntil) {
-      await RestaurantModel.findById(req.params.reservationId)
-      return res.status(200).json('Reservation has been deleted')
+      return res.status(200).send('Reservation has been deleted')
+    } 
+    else if (user && Date.now() < reservation.validUntil) {
+      user.reservation.splice(userIndex, 1)
+      restaurant.reservation.splice(restaurantIndex, 1)
+      await ReservationModel.findByIdAndRemove(req.params.reservationId)
+      await user.save()
+      await restaurant.save()
+
+      return res.status(200).send('Reservation has been deleted')
     } else {
       res.status(200).send('You can not cancell')
     }
@@ -85,6 +94,5 @@ module.exports = {
   createReservation,
   showReservations,
   deleteReservation,
-  editReservation,
-  cancellReservation
+  editReservation
 }

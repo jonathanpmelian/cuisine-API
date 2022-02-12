@@ -36,6 +36,10 @@ const articleSchema = new mongoose.Schema({
   },
   type: {
     type: String,
+    enum: {
+      values: ['Clothes, Kitchenware, Wines'],
+      message: 'Wrong type of article'
+    },
     required: [true, 'Type is required']
   }
 })

@@ -6,14 +6,12 @@ const {
   createReservation,
   showReservations,
   deleteReservation,
-  editReservation,
-  cancellReservation
+  editReservation
 } = require('../controllers/reservation.controller')
 
 router.post('/reservation', checkAuth, createReservation)
 router.get('/reservation', checkAuth, showReservations)
-router.delete('/reservation/:reservationId', checkAuth, cancellReservation)
-router.delete('/reservation/:reservationId', checkAuth, checkAdmin, deleteReservation)
+router.delete('/reservation/:reservationId', checkAuth, deleteReservation)
 router.put('/reservation/:reservationId', checkAuth, editReservation)
 
 module.exports = router
