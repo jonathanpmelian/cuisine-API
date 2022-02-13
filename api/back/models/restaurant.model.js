@@ -46,7 +46,7 @@ const restaurantSchema = new mongoose.Schema({
   }],
   hourCapacity: {
     type: Number,
-    require: [true, "Capaticy is required"]
+    require: [true, 'Capaticy is required']
   },
   totalCapacity: {
     type: Number

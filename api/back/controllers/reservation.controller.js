@@ -9,8 +9,8 @@ async function createReservation (req, res) {
 
     const totalOccupation = restaurant.reservation.reduce((p, c) => c.people + p, 0) + req.body.people
     const occupation = restaurant.reservation.reduce((p, c) => req.body.hour === c.hour ? c.people + p : p, 0) + req.body.people
-    
-    if(occupation < restaurant.hourCapacity &&  totalOccupation < restaurant.totalCapacity) {
+
+    if (occupation < restaurant.hourCapacity && totalOccupation < restaurant.totalCapacity) {
       const booking = await ReservationModel.create(req.body)
       await booking.save()
 
@@ -18,7 +18,7 @@ async function createReservation (req, res) {
       await restaurant.save()
 
       const user = await UserModel.findById(res.locals.user.id)
-      if(user) {
+      if (user) {
         user.reservation.push(booking.id)
         await user.save()
       }
@@ -44,6 +44,17 @@ async function showReservations (req, res) {
   }
 }
 
+async function showOneReservation (req, res) {
+  try {
+    const reservation = await ReservationModel.findById(req.params.reservationId)
+
+    res.status(200).json(reservation)
+  } catch (err) {
+    console.error(err)
+    res.status(500).send('Error showing reservation')
+  }
+}
+
 async function editReservation (req, res) {
   try {
     const reservation = await ReservationModel.findByIdAndUpdate(req.params.reservationId, req.body, { new: true, runValidators: true })
@@ -63,8 +74,8 @@ async function deleteReservation (req, res) {
     const restaurant = await RestaurantModel.findById(req.params.restaurantId)
     const userIndex = user.reservation.findIndex(elem => elem._id.toString() === reservation.id)
     const restaurantIndex = restaurant.reservation.findIndex(elem => elem._id.toString() === reservation.id)
-    
-    if(user.role === "Admin" ) {
+
+    if (user.role === 'Admin') {
       user.reservation.splice(userIndex, 1)
       restaurant.reservation.splice(restaurantIndex, 1)
       await ReservationModel.findByIdAndRemove(req.params.reservationId)
@@ -72,8 +83,7 @@ async function deleteReservation (req, res) {
       await restaurant.save()
 
       return res.status(200).send('Reservation has been deleted')
-    } 
-    else if (user && Date.now() < reservation.validUntil) {
+    } else if (user && Date.now() < reservation.validUntil) {
       user.reservation.splice(userIndex, 1)
       restaurant.reservation.splice(restaurantIndex, 1)
       await ReservationModel.findByIdAndRemove(req.params.reservationId)
@@ -93,6 +103,7 @@ async function deleteReservation (req, res) {
 module.exports = {
   createReservation,
   showReservations,
+  showOneReservation,
   deleteReservation,
   editReservation
 }

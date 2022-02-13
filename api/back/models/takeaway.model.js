@@ -36,7 +36,7 @@ const takeawaySchema = new mongoose.Schema({
       values: ['Starters, Main, Desserts, Drinks'],
       message: 'Wrong type of Takeaway'
     },
-    require: [true, "Type of take away is required"]
+    require: [true, 'Type of take away is required']
   },
   restaurant: {
     type: mongoose.Schema.Types.ObjectId,

@@ -9,7 +9,7 @@ const reservationSchema = new mongoose.Schema({
     type: String,
     require: [true, 'Hour is required'],
     enum: {
-      values:['18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30'],
+      values: ['18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30'],
       message: 'Invalid hour. Please try: 18:00, 18:30, 19:00, 19:30, 20:00, 20:30, 21:00, 21:30'
     }
   },
@@ -33,7 +33,7 @@ const reservationSchema = new mongoose.Schema({
   },
   people: {
     type: Number,
-    require: [true, 'People is required'],
+    require: [true, 'People is required']
   },
   phone: {
     type: String,
