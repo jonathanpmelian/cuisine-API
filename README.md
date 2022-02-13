@@ -108,7 +108,7 @@ The Cart flow for the application is:
 METHOD | ENDPOINT         | TOKEN |     ROL        |  DESCRIPTION               | POST PARAMS                                     | RETURNS
 -------|------------------|-------|----------------|----------------------------|-------------------------------------------------|--------------------
 GET    | /cart            | YES   | Client - Admin | View own cart              | -                                               | [products]
-POST   | /cart/:cartId    | YES   | Client - Admin | Add product to the cart    | -                                               | ??
+POST   | /cart/:cartId    | YES   | Client - Admin | Add product to the cart    | ??                                               | ??
 
 
 
