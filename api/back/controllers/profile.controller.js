@@ -37,8 +37,20 @@ async function deleteMyProfile (req, res) {
   }
 }
 
+async function viewMyReservationList (req, res) {
+  try {
+    const user = await UserModel.findById(res.locals.user.id).populate('reservation')
+
+    res.status(200).json(user.reservation)
+  } catch (err) {
+    console.error(err)
+    res.status(500).send(`Error finding user reservation: ${err}`)
+  }
+}
+
 module.exports = {
   viewMyProfile,
   editMyProfile,
-  deleteMyProfile
+  deleteMyProfile,
+  viewMyReservationList
 }

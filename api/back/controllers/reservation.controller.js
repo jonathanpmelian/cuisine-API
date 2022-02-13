@@ -7,26 +7,22 @@ async function createReservation (req, res) {
     const restaurant = await RestaurantModel.findById(req.params.restaurantId).populate('reservation')
     req.body.restaurant = restaurant.id
 
-    const totalOccupation = restaurant.reservation.reduce((p, c) => c.people + p, 0) + req.body.people
-    const occupation = restaurant.reservation.reduce((p, c) => req.body.hour === c.hour ? c.people + p : p, 0) + req.body.people
+    // const totalOccupation = restaurant.reservation.reduce((p, c) => c.people + p, 0) + req.body.people
+    // const occupation = restaurant.reservation.reduce((p, c) => req.body.hour === c.hour ? c.people + p : p, 0) + req.body.people
 
-    if (occupation < restaurant.hourCapacity && totalOccupation < restaurant.totalCapacity) {
-      const booking = await ReservationModel.create(req.body)
-      await booking.save()
+    const booking = await ReservationModel.create(req.body)
+    await booking.save()
 
-      restaurant.reservation.push(booking.id)
-      await restaurant.save()
+    restaurant.reservation.push(booking.id)
+    await restaurant.save()
 
-      const user = await UserModel.findById(res.locals.user.id)
-      if (user) {
-        user.reservation.push(booking.id)
-        await user.save()
-      }
-
-      res.status(200).json(booking)
-    } else {
-      res.status(200).send('Ahora no se puede')
+    const user = await UserModel.findById(res.locals.user.id)
+    if (user) {
+      user.reservation.push(booking.id)
+      await user.save()
     }
+
+    res.status(200).json(booking)
   } catch (err) {
     console.error(err)
     res.status(500).send('Error making a reservation')

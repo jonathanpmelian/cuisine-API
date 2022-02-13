@@ -61,6 +61,10 @@ const userSchema = new mongoose.Schema({
     default: 'Client'
   },
   address: [addressSchema],
+  cart: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'cart'
+  },
   order: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'order'
