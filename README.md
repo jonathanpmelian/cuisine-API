@@ -11,9 +11,9 @@ The Authentication flow for the application is:
  
 METHOD | ENDPOINT         | TOKEN |     ROL        |  DESCRIPTION               | POST PARAMS                                     | RETURNS
 -------|------------------|-------|----------------|----------------------------|-------------------------------------------------|--------------------
-POST   | /auth/signup     | -     | -              | User Signup                |                                                 | `token`
-POST   | /auth/login      | -     | -              | User Login                 |                                                 | `token`
-GET    | /auth/check      | YES   | -              | Check Token                |                                                 | '?'
+POST   | /auth/signup     | NO    | -              | User Signup                |   (DATOS PARA REGISTRARTE)                      | `token`
+POST   | /auth/login      | NO    | -              | User Login                 | Email contraseña                                | `token`
+
 
 ### Profile Endpoints
 
@@ -22,7 +22,6 @@ The Profile flow for the application is:
 METHOD | ENDPOINT         | TOKEN |     ROL        |  DESCRIPTION               | POST PARAMS                                     | RETURNS
 -------|------------------|-------|----------------|----------------------------|-------------------------------------------------|--------------------
 GET    | /profile         | YES   | Client - Admin | View own profile           | -                                               | `name`, `surname`, `email`, `phone`
-GET    | /profile/orders  | YES   | Client - Admin | View own orders            | -                                               | user.order
 GET    | /profile/address | YES   | Client - Admin | View own addresses         | -                                               | user.address
 GET    | /profile/cart    | YES   | Client - Admin | View own cart              | -                                               | user.cart
 GET    | /profile/users   | YES   | Admin          | View registered users      | -                                               | [user]
@@ -32,7 +31,6 @@ PUT    | /profile/address/:addressId | YES | Client - Admin | Update direction  
 PUT    | /user/:userId    | YES   | Admin          | Update user role           | 'role'
 POST   | /profile/address | YES   | Client - Admin | Create a direction         | 'street', 'zip', 'city', 'name', 'surname', 'country', 'province', 'phone' | address
 DELETE | /profile         | YES   |     Client     | Delete own profile         |                                                 |
-
 
 ### TakeAway Endpoints
 
@@ -95,11 +93,11 @@ The Order flow for the application is:
 
 METHOD | ENDPOINT         | TOKEN |     ROL        |  DESCRIPTION               | POST PARAMS                                     | RETURNS
 -------|------------------|-------|----------------|----------------------------|-------------------------------------------------|--------------------
-GET    | /order           | YES   | Admin          | View all order             | -                                               | [order]
-GET    | /order/:orderId  | YES   | Admin??        | View one order             | -                                               | order
-PUT    | /order/:orderId  | YES   | Admin??        | Edit a order               | 'status', 'date', 'deliveryDay', 'deliveryHpur', 'address'?? | order
-POST   | /order           |  YES  | Admin          | Create a order             | 'status', 'date', 'deliveryDay', 'deliveryHpur', 'address'?? | order
-DELETE | /order/:orderId  | YES   | Admin          | Delete a order             |
+GET    | /order           | YES   | Admin - Client | View all order             | -                                               | [order]
+GET    | /order/:orderId  | YES   | Admin - Client | View one order             | -                                               | order
+PUT    | /order/:orderId  | YES   | Admin          | Edit a order               | `status`, 'deliveryDay', 'deliveryHour'         | order
+POST   | /order           | YES   | Admin - Client | Create a order             | 'address' 'email'                               | order
+DELETE | /order/:orderId  | YES   | Admin - Client | Delete a order             |                                                 |
 
 ### Cart Endpoints
 
@@ -107,8 +105,9 @@ The Cart flow for the application is:
 
 METHOD | ENDPOINT         | TOKEN |     ROL        |  DESCRIPTION               | POST PARAMS                                     | RETURNS
 -------|------------------|-------|----------------|----------------------------|-------------------------------------------------|--------------------
-GET    | /cart            | YES   | Client - Admin | View own cart              | -                                               | [products]
-POST   | /cart/:cartId    | YES   | Client - Admin | Add product to the cart    | ??                                               | ??
+GET    | /cart            | YES   | Client - Admin | View own cart              | -                                               | cart
+POST   | /cart/:cartId    | YES   | Client - Admin | Add product to the cart    | -                                               | cart
+DETELE | /cart/:cartId    | YES   | Client - Admin | Detele a product cart      | -                                               | 
 
 
 
