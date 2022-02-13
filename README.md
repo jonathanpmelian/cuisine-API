@@ -95,13 +95,20 @@ The Order flow for the application is:
 
 METHOD | ENDPOINT         | TOKEN |     ROL        |  DESCRIPTION               | POST PARAMS                                     | RETURNS
 -------|------------------|-------|----------------|----------------------------|-------------------------------------------------|--------------------
-GET    | /order         | NO    | -              | View all article           | -                                               | [article]
-GET    | /order/:articleId | NO | -              | View one article           | -                                               | article
-PUT    | /order/:articleId | YES | Admin         | Edit one article           | 'name', 'price', 'description', 'photo', 'stock', 'supplier' | article
-POST   | /order         | YES   | Admin          | Create a article           | 'name', 'price', 'description', 'photo', 'stock', 'supplier' | article
-DELETE | /order/:articleId | YES | Admin         | Delete a article           |
+GET    | /order           | YES   | Admin          | View all order             | -                                               | [order]
+GET    | /order/:orderId  | YES   | Admin??        | View one order             | -                                               | order
+PUT    | /order/:orderId  | YES   | Admin??        | Edit a order               | 'status', 'date', 'deliveryDay', 'deliveryHpur', 'address'?? | order
+POST   | /order           |  YES  | Admin          | Create a order             | 'status', 'date', 'deliveryDay', 'deliveryHpur', 'address'?? | order
+DELETE | /order/:orderId  | YES   | Admin          | Delete a order             |
 
+### Cart Endpoints
 
+The Cart flow for the application is:
+
+METHOD | ENDPOINT         | TOKEN |     ROL        |  DESCRIPTION               | POST PARAMS                                     | RETURNS
+-------|------------------|-------|----------------|----------------------------|-------------------------------------------------|--------------------
+GET    | /cart            | YES   | Client - Admin | View own cart              | -                                               | [products]
+POST   | /cart/:cartId    | YES   | Client - Admin | Add product to the cart    | -                                               | ??
 
 
 
