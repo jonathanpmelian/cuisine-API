@@ -8,7 +8,7 @@ async function signup (req, res) {
     req.body.password = bcrypt.hashSync(req.body.password, parseInt(process.env.SALTROUNDS))
 
     const user = await UserModel.create(req.body)
-
+    
     const token = jwt.sign({ email: user.email }, process.env.SECRET, { expiresIn: '20d' })
     res.status(200).json({ token })
   } catch (err) {

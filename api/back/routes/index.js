@@ -8,6 +8,7 @@ const articleRouter = require('./article.router')
 const takeawayRouter = require('./takeaway.router')
 const experienceRouter = require('./experience.router')
 const cartRouter = require('./cart.router')
+const orderRouter = require('./order.router')
 
 router.use('/auth', authRouter)
 router.use('/profile', profileRouter)
@@ -17,5 +18,6 @@ router.use('/article', articleRouter)
 router.use('/takeaway', takeawayRouter)
 router.use('/experience', experienceRouter)
 router.use('/cart', cartRouter)
+router.use('/order', orderRouter)
 
 module.exports = router

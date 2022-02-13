@@ -3,28 +3,34 @@ const addressSchema = require('./address.model')
 
 const orderSchema = new mongoose.Schema({
   status: {
-    type: String
+    type: String,
+    default: 'Preparing',
+    enum: ['Preparing', 'Sending', 'Delivered']
   },
-  date: {
+  dateNow: {
     type: Date,
-    require: [true, 'Date is required']
+    default: () => Date.now()
   },
   deliveryDay: {
-    type: Date,
-    require: [true, 'DeliveryDay is required']
+    type: Number
   },
   deliveryHour: {
-    type: Date,
-    require: [true, 'DeliveryHour is required']
+    type: Number
   },
   email: {
     type: String,
-    require: [true, 'Name is required']
+    required: [true, 'Name is required'],
+    validate: {
+      validator: function (v) {
+        return (/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/).test(v)
+      },
+      message: 'Invalid email format'
+    }
   },
   cart: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'cart',
-    require: [true, 'Cart is required']
+    required: [true, 'Cart is required']
   },
   adress: addressSchema
 })
