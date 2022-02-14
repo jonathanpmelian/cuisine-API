@@ -28,11 +28,8 @@ const experienceSchema = new mongoose.Schema({
     type: Number
   },
   duration: {
-    type: String
-  },
-  reservation: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'reservation'
+    type: String,
+    required: [true, 'Duration is required']
   }
 })
 

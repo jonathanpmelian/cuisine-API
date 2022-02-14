@@ -12,7 +12,7 @@ const takeawaySchema = new mongoose.Schema({
     }
   },
   price: {
-    type: String,
+    type: Number,
     required: [true, 'Price is required']
   },
   description: {
@@ -28,7 +28,8 @@ const takeawaySchema = new mongoose.Schema({
     type: String
   },
   cookingTime: {
-    type: Number
+    type: Number,
+    required: [true, 'Cooking time is required']
   },
   type: {
     type: String,

@@ -50,6 +50,10 @@ const restaurantSchema = new mongoose.Schema({
   },
   totalCapacity: {
     type: Number
+  },
+  order:  {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'order'
   }
 })
 

@@ -37,11 +37,23 @@ const reservationSchema = new mongoose.Schema({
   },
   phone: {
     type: String,
-    require: [true, 'Phone is required']
+    require: [true, 'Phone is required'],
+    validate: {
+      validator: function (v) {
+        return (/^[+]{1}[(]{1}[0-9]{2}[)]{1}[0-9]{3,4}[0-9]{6}$/).test(v)
+      },
+      message: 'Invalid user phone number'
+    }
   },
   name: {
     type: String,
-    require: [true, 'Name is required']
+    require: [true, 'Name is required'],
+    validate: {
+      validator: function (v) {
+        return (/\b([A-ZÀ-ÿ][-,a-z. '\\ ]{2,30})/).test(v)
+      },
+      message: 'Name should be between 2 and 30 characters. First letter uppercase.'
+    }
   },
   restaurant: {
     type: mongoose.Schema.Types.ObjectId,
@@ -51,6 +63,10 @@ const reservationSchema = new mongoose.Schema({
   validUntil: {
     type: Date,
     default: () => Date.now() + 60 * 1000 // 1 hour after reservation
+  },
+  experience: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'experience'
   }
 })
 

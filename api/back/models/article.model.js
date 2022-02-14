@@ -32,7 +32,13 @@ const articleSchema = new mongoose.Schema({
     required: [true, 'Stock is required']
   },
   supplier: {
-    type: String
+    type: String,
+    validate: {
+      validator: function (v) {
+        return (/\b([A-ZÀ-ÿ][-,a-z. '\\ ]{2,30})/).test(v)
+      },
+      message: 'Name should be between 2 and 30 characters. First letter uppercase.'
+    }
   },
   type: {
     type: String,
