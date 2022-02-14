@@ -32,7 +32,10 @@ const orderSchema = new mongoose.Schema({
     ref: 'cart',
     required: [true, 'Cart is required']
   },
-  adress: addressSchema
+  address: {
+    type: addressSchema,
+    required: true
+  }
 })
 
 const OrderModel = mongoose.model('order', orderSchema)

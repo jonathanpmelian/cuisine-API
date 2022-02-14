@@ -14,7 +14,12 @@ async function createExperience (req, res) {
 
 async function showAllExperiences (req, res) {
   try {
+    const sortParam = {
+      price: req.query.sortPrice
+    }
+    
     const experiences = await ExperienceModel.find()
+    .sort(sortParam)
 
     res.status(200).json(experiences)
   } catch (err) {

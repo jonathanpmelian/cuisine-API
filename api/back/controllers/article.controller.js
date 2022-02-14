@@ -14,7 +14,7 @@ async function createArticle (req, res) {
 
 async function showAllArticles (req, res) {
   try {
-    const articles = await ArticleModel.find()
+    const articles = await ArticleModel.find(req.query).sort({stock: 0}).limit(req.query.limit)
 
     res.status(200).json(articles)
   } catch (err) {

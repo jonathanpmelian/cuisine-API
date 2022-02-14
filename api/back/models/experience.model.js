@@ -28,7 +28,7 @@ const experienceSchema = new mongoose.Schema({
     type: Number
   },
   duration: {
-    type: String,
+    type: Number,
     required: [true, 'Duration is required']
   }
 })

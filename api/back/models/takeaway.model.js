@@ -34,14 +34,15 @@ const takeawaySchema = new mongoose.Schema({
   type: {
     type: String,
     enum: {
-      values: ['Starters, Main, Desserts, Drinks'],
+      values: ['Starters', 'Main', 'Desserts', 'Drinks'],
       message: 'Wrong type of Takeaway'
     },
-    require: [true, 'Type of take away is required']
+    required: [true, 'Type of take away is required']
   },
   restaurant: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'restaurant'
+    ref: 'restaurant',
+    required: true
   }
 })
 

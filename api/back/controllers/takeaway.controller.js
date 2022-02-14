@@ -2,7 +2,7 @@ const TakeawayModel = require('../models/takeaway.model')
 
 async function showAllTakeaway (req, res) {
   try {
-    const takeaways = await TakeawayModel.find()
+    const takeaways = await TakeawayModel.find(req.query)
 
     res.status(200).json(takeaways)
   } catch (err) {

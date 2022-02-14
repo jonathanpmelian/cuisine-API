@@ -2,24 +2,24 @@ const OrderModel = require('../models/order.model')
 const UserModel = require('../models/user.model')
 const CartModel = require('../models/cart.model')
 
-async function createOrder(req, res) {
+async function createOrder (req, res) {
   try {
     const user = await UserModel.findById(res.locals.user.id)
-    
-    if(user.cart === undefined) {
+
+    if (user.cart === undefined) {
       return res.status(200).send('Your cart is empty')
     }
-    if(user) {
+    if (user) {
       req.body.cart = user.cart
       req.body.email = user.email
     }
-    
+
     const order = await OrderModel.create(req.body)
     await order.save()
     user.order.push(order.id)
     await user.save()
 
-    const cart = await CartModel.findByIdAndRemove(user.cart._id.toString())
+    await CartModel.findByIdAndRemove(user.cart._id.toString())
     user.cart = undefined
     await user.save()
 
@@ -33,14 +33,14 @@ async function createOrder(req, res) {
 async function showAllOrders (req, res) {
   try {
     const user = await UserModel.findById(res.locals.user.id).populate('order')
-    if(user.role === 'Admin') {
-      const order = await OrderModel.find()
+    if (user.role === 'Admin') {
+      const order = await OrderModel.find(req.query).sort({status: 0})
 
       return res.status(200).json(order)
-    }else {
+    } else {
       return res.status(200).json(user.order)
     }
-  } catch (error) {
+  } catch (err) {
     console.error(err)
     res.status(500).send(`Error showing orders: ${err}`)
   }
@@ -51,7 +51,7 @@ async function showOneOrder (req, res) {
     const order = await OrderModel.findById(req.params.orderId)
 
     res.status(200).json(order)
-  } catch (error) {
+  } catch (err) {
     console.error(err)
     res.status(500).send(`Error showing one order: ${err}`)
   }
@@ -59,14 +59,14 @@ async function showOneOrder (req, res) {
 
 async function editOneOrder (req, res) {
   try {
-    const order = await OrderModel.findByIdAndUpdate(req.params.orderId,{status: req.body.status, deliveryDay: req.body.deliveryDay, deliveryHour: req.body.deliveryHour},{
+    const order = await OrderModel.findByIdAndUpdate(req.params.orderId, { status: req.body.status, deliveryDay: req.body.deliveryDay, deliveryHour: req.body.deliveryHour }, {
       new: true,
       runValidators: true
     })
     await order.save()
 
     res.status(200).json(order)
-  } catch (error) {
+  } catch (err) {
     console.error(err)
     res.status(500).send(`Error updating order: ${err}`)
   }
@@ -79,10 +79,10 @@ async function deleteOneOrder (req, res) {
     const index = user.order.findIndex(elem => elem._id.toString() === req.params.orderId)
 
     console.log(order.dateNow + 60 * 60 * 1000)
-    
-    if(Date.now() - 60 * 60 * 1000 < order.dateNow ) {
+
+    if (Date.now() - 60 * 60 * 1000 < order.dateNow) {
       await OrderModel.findByIdAndRemove(req.params.orderId)
-      user.order.splice(index,1)
+      user.order.splice(index, 1)
       await user.save()
 
       res.status(200).json(user.order)
