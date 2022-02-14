@@ -1,11 +1,11 @@
 const router = require('express').Router()
 
+const { checkAuth } = require('../utils/index')
+
 const {
   login,
   signup
 } = require('../controllers/auth.controller')
-
-const checkAuth = require('../utils/index')
 
 router.post('/login', login)
 router.post('/signup', signup)

@@ -1,15 +1,23 @@
 const router = require('express').Router()
 
 const {
-  getProfile,
-  editProfile,
-  deleteProfile
+  checkAuth
+} = require('../utils/index')
+
+const {
+  viewMyProfile,
+  editMyProfile,
+  deleteMyProfile,
+  viewMyReservationList
 } = require('../controllers/profile.controller')
 
-const checkAuth = require('../utils/index')
+const addressRouter = require('./address.router')
 
-router.get('/', checkAuth, getProfile)
-router.put('/', checkAuth, editProfile)
-router.delete('/', checkAuth, deleteProfile)
+router.use('/address', addressRouter)
+
+router.get('/', checkAuth, viewMyProfile)
+router.put('/', checkAuth, editMyProfile)
+router.delete('/', checkAuth, deleteMyProfile)
+router.get('/reservation', checkAuth, viewMyReservationList)
 
 module.exports = router

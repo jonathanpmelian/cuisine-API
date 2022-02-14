@@ -1,8 +1,9 @@
 const UserModel = require('../models/user.model')
 
-async function getProfile (req, res) {
+async function viewMyProfile (req, res) {
   try {
-    const user = await UserModel.findById(res.locals.user.id)
+    const user = await UserModel.findById(res.locals.user.id, { password: 0, role: 0, address: 0, order: 0, reservation: 0, __v: 0 })
+
     res.status(200).json(user)
   } catch (err) {
     console.error(err)
@@ -10,12 +11,14 @@ async function getProfile (req, res) {
   }
 }
 
-async function editProfile (req, res) {
+async function editMyProfile (req, res) {
   try {
     const user = await UserModel.findByIdAndUpdate(res.locals.user.id, req.body, {
-      new: true
+      new: true,
+      runValidators: true
     })
     await user.save()
+
     res.status(200).json(user)
   } catch (err) {
     console.error(err)
@@ -23,9 +26,10 @@ async function editProfile (req, res) {
   }
 }
 
-async function deleteProfile (req, res) {
+async function deleteMyProfile (req, res) {
   try {
     await UserModel.findByIdAndDelete(res.locals.user.id)
+
     res.status(200).send('User has been deleted')
   } catch (err) {
     console.error(err)
@@ -33,8 +37,20 @@ async function deleteProfile (req, res) {
   }
 }
 
+async function viewMyReservationList (req, res) {
+  try {
+    const user = await UserModel.findById(res.locals.user.id).populate('reservation')
+
+    res.status(200).json(user.reservation)
+  } catch (err) {
+    console.error(err)
+    res.status(500).send(`Error finding user reservation: ${err}`)
+  }
+}
+
 module.exports = {
-  getProfile,
-  editProfile,
-  deleteProfile
+  viewMyProfile,
+  editMyProfile,
+  deleteMyProfile,
+  viewMyReservationList
 }
