@@ -28,7 +28,7 @@ async function editOneUserRole (req, res) {
 
 async function deleteOneUserProfile (req, res) {
   try {
-    await UserModel.findById(req.params.userId)
+    await UserModel.findByIdAndRemove(req.params.userId)
 
     res.status(200).send('User has been deleted')
   } catch (err) {

@@ -34,7 +34,7 @@ async function showAllOrders (req, res) {
   try {
     const user = await UserModel.findById(res.locals.user.id).populate('order')
     if (user.role === 'Admin') {
-      const order = await OrderModel.find(req.query).sort({status: 0})
+      const order = await OrderModel.find(req.query).sort({ status: 0 })
 
       return res.status(200).json(order)
     } else {
@@ -77,10 +77,9 @@ async function deleteOneOrder (req, res) {
     const user = await UserModel.findById(res.locals.user.id).populate('order')
     const order = await OrderModel.findById(req.params.orderId)
     const index = user.order.findIndex(elem => elem._id.toString() === req.params.orderId)
+    const oneHourDelay = 60 * 60 * 1000
 
-    console.log(order.dateNow + 60 * 60 * 1000)
-
-    if (Date.now() - 60 * 60 * 1000 < order.dateNow) {
+    if (Date.now() - oneHourDelay < order.dateNow) {
       await OrderModel.findByIdAndRemove(req.params.orderId)
       user.order.splice(index, 1)
       await user.save()

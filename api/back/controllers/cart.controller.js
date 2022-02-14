@@ -4,7 +4,7 @@ const ExperienceModel = require('../models/experience.model')
 const TakeawayModel = require('../models/takeaway.model')
 const CartModel = require('../models/cart.model')
 
-async function addProductToCart (req, res) { // To Refactor
+async function addProductToCart (req, res) {
   try {
     const experience = await ExperienceModel.findById(req.params.productId)
     const article = await ArticleModel.findById(req.params.productId)

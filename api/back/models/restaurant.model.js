@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const restaurantSchema = new mongoose.Schema({
   name: {
     type: String,
-    require: [true, 'Name is required'],
+    required: [true, 'Name is required'],
     validate: {
       validator: function (v) {
         return (/\b([A-ZÀ-ÿ][-,a-z. '\\ ]{2,30})/).test(v)
@@ -17,7 +17,7 @@ const restaurantSchema = new mongoose.Schema({
   },
   phone: {
     type: String,
-    require: [true, 'Phone is required'],
+    required: [true, 'Phone is required'],
     validate: {
       validator: function (v) {
         return (/^[+]{1}[(]{1}[0-9]{2}[)]{1}[0-9]{3,4}[0-9]{6}$/).test(v)
@@ -46,12 +46,12 @@ const restaurantSchema = new mongoose.Schema({
   }],
   hourCapacity: {
     type: Number,
-    require: [true, 'Capaticy is required']
+    required: [true, 'Capaticy is required']
   },
   totalCapacity: {
     type: Number
   },
-  order:  {
+  order: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'order'
   }

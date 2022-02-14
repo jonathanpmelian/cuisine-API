@@ -16,12 +16,14 @@ async function createReservation (req, res) {
     restaurant.reservation.push(booking.id)
     await restaurant.save()
 
-    const user = await UserModel.findById(res.locals.user.id)
-    if (user) {
-      user.reservation.push(booking.id)
-      await user.save()
+    if(res.locals.user !== undefined) {
+      const user = await UserModel.findById(res.locals.user.id)
+      if (user) {
+        user.reservation.push(booking.id)
+        await user.save()
+      }
     }
-
+    
     res.status(200).json(booking)
   } catch (err) {
     console.error(err)

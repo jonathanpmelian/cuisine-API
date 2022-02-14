@@ -1,6 +1,10 @@
 const router = require('express').Router({ mergeParams: true })
 
-const { checkAuth, checkAdmin } = require('../utils')
+const { 
+  checkAuth, 
+  checkAdmin,
+  checkIf
+ } = require('../utils')
 
 const {
   createReservation,
@@ -10,7 +14,7 @@ const {
   editReservation
 } = require('../controllers/reservation.controller')
 
-router.post('/reservation', checkAuth, createReservation)
+router.post('/reservation', checkIf, createReservation)
 router.get('/reservation', checkAuth, checkAdmin, showReservations)
 router.get('/:reservation/:reservationId', checkAuth, checkAdmin, showOneReservation)
 router.delete('/reservation/:reservationId', checkAuth, deleteReservation)
