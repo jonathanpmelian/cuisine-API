@@ -11,8 +11,8 @@ The Authentication flow for the application is:
  
 METHOD | ENDPOINT         | TOKEN |     ROL        |  DESCRIPTION               | POST PARAMS                                     | RETURNS
 -------|------------------|-------|----------------|----------------------------|-------------------------------------------------|--------------------
-POST   | /auth/signup     | NO    | -              | User Signup                |   (DATOS PARA REGISTRARTE)                      | `token`
-POST   | /auth/login      | NO    | -              | User Login                 | Email contraseña                                | `token`
+POST   | /auth/signup     | NO    | -              | User Signup                | `name`, `surname`, `email`, `password`, `phone`, `role`   | `token`
+POST   | /auth/login      | NO    | -              | User Login                 | `email`, `password`                             | `token`
 
 
 ### Profile Endpoints
