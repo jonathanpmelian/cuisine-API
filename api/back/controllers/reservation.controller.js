@@ -33,7 +33,7 @@ async function createReservation (req, res) {
 
 async function showReservations (req, res) {
   try {
-    const reservation = await ReservationModel.find({ restaurant: req.params.restaurantId }).populate({path: 'restaurant', select: 'name'})
+    const reservation = await ReservationModel.find({ restaurant: req.params.restaurantId }).populate({ path: 'restaurant', select: 'name' })
 
     res.status(200).json(reservation)
   } catch (err) {
@@ -44,7 +44,7 @@ async function showReservations (req, res) {
 
 async function showOneReservation (req, res) {
   try {
-    const reservation = await ReservationModel.findById(req.params.reservationId).populate({path: 'restaurant', select: 'name'})
+    const reservation = await ReservationModel.findById(req.params.reservationId).populate({ path: 'restaurant', select: 'name' })
 
     res.status(200).json(reservation)
   } catch (err) {

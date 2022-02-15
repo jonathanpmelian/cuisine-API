@@ -35,6 +35,18 @@ const orderSchema = new mongoose.Schema({
   address: {
     type: addressSchema,
     required: true
+  },
+  article: {
+    type: Array
+  },
+  experience: {
+    type: Array
+  },
+  takeaway: {
+    type: Array
+  },
+  totalPrice: {
+    type: Number
   }
 })
 

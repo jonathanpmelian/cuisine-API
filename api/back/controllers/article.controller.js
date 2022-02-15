@@ -15,21 +15,20 @@ async function createArticle (req, res) {
 
 async function showAllArticles (req, res) {
   try {
-    if(res.locals.user === undefined) {
-      const articles = await ArticleModel.find(req.query, {__v: 0, stock: 0}).sort({ stock: 0 }).limit(req.query.limit)
+    if (res.locals.user === undefined) {
+      const articles = await ArticleModel.find(req.query, { __v: 0, stock: 0 }).sort({ stock: 0 }).limit(req.query.limit)
       return res.status(200).json(articles)
     } else {
       const user = await UserModel.findById(res.locals.user.id)
-      console.log(user.role)
-      if(user.role === 'Admin') {
-        const articles = await ArticleModel.find(req.query, {__v: 0}).sort({ stock: 0 }).limit(req.query.limit)
+      
+      if (user.role === 'Admin') {
+        const articles = await ArticleModel.find(req.query, { __v: 0 }).sort({ stock: 0 }).limit(req.query.limit)
         return res.status(200).json(articles)
       } else {
-        const articles = await ArticleModel.find(req.query, {__v: 0, stock: 0}).sort({ stock: 0 }).limit(req.query.limit)
+        const articles = await ArticleModel.find(req.query, { __v: 0, stock: 0 }).sort({ stock: 0 }).limit(req.query.limit)
         return res.status(200).json(articles)
       }
     }
-    
   } catch (err) {
     console.error(err)
     res.status(500).send(`Error showing articles: ${err}`)
@@ -38,17 +37,17 @@ async function showAllArticles (req, res) {
 
 async function showOneArticle (req, res) {
   try {
-    if(res.locals.user === undefined) {
-      const articles = await ArticleModel.findById(req.params.articleId, {__v: 0, stock: 0}).sort({ stock: 0 }).limit(req.query.limit)
+    if (res.locals.user === undefined) {
+      const articles = await ArticleModel.findById(req.params.articleId, { __v: 0, stock: 0 }).sort({ stock: 0 }).limit(req.query.limit)
       return res.status(200).json(articles)
     } else {
       const user = await UserModel.findById(res.locals.user.id)
-      console.log(user.role)
-      if(user.role === 'Admin') {
-        const articles = await ArticleModel.findById(req.params.articleId, {__v: 0}).sort({ stock: 0 }).limit(req.query.limit)
+      
+      if (user.role === 'Admin') {
+        const articles = await ArticleModel.findById(req.params.articleId, { __v: 0 }).sort({ stock: 0 }).limit(req.query.limit)
         return res.status(200).json(articles)
       } else {
-        const articles = await ArticleModel.findById(req.params.articleId, {__v: 0, stock: 0}).sort({ stock: 0 }).limit(req.query.limit)
+        const articles = await ArticleModel.findById(req.params.articleId, { __v: 0, stock: 0 }).sort({ stock: 0 }).limit(req.query.limit)
         return res.status(200).json(articles)
       }
     }

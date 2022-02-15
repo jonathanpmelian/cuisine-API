@@ -4,29 +4,41 @@ const CartModel = require('../models/cart.model')
 
 async function createOrder (req, res) {
   try {
-    if(res.locals.user) {
+    if (res.locals.user) {
       var user = await UserModel.findById(res.locals.user.id)
+   
       if (user.cart === undefined) {
-       return res.status(200).send('Your cart is empty')
+        return res.status(200).send('Your cart is empty')
       }
+      const cart = await CartModel.findById(user.cart._id)
       req.body.cart = user.cart
       req.body.email = user.email
+      req.body.article = cart.article
+      req.body.experience = cart.experience
+      req.body.takeaway = cart.takeaway
+      req.body.totalPrice = cart.totalPrice
+    } else {
+      const cart = await CartModel.findById(req.body.cart)
+      req.body.article = cart.article
+      req.body.experience = cart.experience
+      req.body.takeaway = cart.takeaway
+      req.body.totalPrice = cart.totalPrice
     }
-    
+
     const order = await OrderModel.create(req.body)
-    
-    if(res.locals.user) {
+
+    if (res.locals.user) {
       user.order.push(order.id)
-     await user.save()
+      await user.save()
     }
-    
+
     await CartModel.findByIdAndRemove(req.body.cart)
 
-    if(res.locals.user) {
+    if (res.locals.user) {
       user.cart = undefined
       await user.save()
     }
-    
+
     res.status(200).json(order)
   } catch (err) {
     console.error(err)
@@ -36,9 +48,10 @@ async function createOrder (req, res) {
 
 async function showAllOrders (req, res) {
   try {
-    const user = await UserModel.findById(res.locals.user.id).populate('order')
+    const user = await UserModel.findById(res.locals.user.id).populate({path: 'order', select: '-cart'})
+
     if (user.role === 'Admin') {
-      const order = await OrderModel.find(req.query).sort({ status: 0 })
+      const order = await OrderModel.find(req.query, {cart: 0}).sort({ status: 0 })
 
       return res.status(200).json(order)
     } else {
@@ -52,7 +65,7 @@ async function showAllOrders (req, res) {
 
 async function showOneOrder (req, res) {
   try {
-    const order = await OrderModel.findById(req.params.orderId)
+    const order = await OrderModel.findById(req.params.orderId, {cart: 0})
 
     res.status(200).json(order)
   } catch (err) {

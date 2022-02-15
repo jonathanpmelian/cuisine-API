@@ -39,7 +39,7 @@ async function deleteMyProfile (req, res) {
 
 async function viewMyReservationList (req, res) {
   try {
-    const user = await UserModel.findById(res.locals.user.id).populate({path: 'reservation', populate: {path: 'restaurant', select: 'name'}})
+    const user = await UserModel.findById(res.locals.user.id).populate({ path: 'reservation', populate: { path: 'restaurant', select: 'name' } })
 
     res.status(200).json(user.reservation)
   } catch (err) {
