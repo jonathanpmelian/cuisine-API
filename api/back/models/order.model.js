@@ -19,7 +19,7 @@ const orderSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    required: [true, 'Name is required'],
+    required: [true, 'Email is required'],
     validate: {
       validator: function (v) {
         return (/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/).test(v)

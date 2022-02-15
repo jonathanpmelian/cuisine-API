@@ -9,35 +9,44 @@ async function addProductToCart (req, res) {
     const experience = await ExperienceModel.findById(req.params.productId)
     const article = await ArticleModel.findById(req.params.productId)
     const takeaway = await TakeawayModel.findById(req.params.productId)
-    const user = await UserModel.findById(res.locals.user.id)
+    
+    if(res.locals.user) {
+      var user = await UserModel.findById(res.locals.user.id)
 
-    if (user) {
       if(user.cart === undefined) {
         var cart = await CartModel.create({})
       } else {
-        var cart = await CartModel.findById(user.cart._id)
+        var cart = await CartModel.findById(user.cart.id)
       }
-    
-      if (experience !== null) {
-        cart.experience.push(req.params.productId)
-      } else if (article !== null) {
-        cart.article.push(req.params.productId)
-      } else if (takeaway !== null) {
-        cart.takeaway.push(req.params.productId)
+    } else {
+      if(req.body.hasOwnProperty('cart')) {
+        var cart = await CartModel.findById(req.body.cart)
+        console.log(cart)
       } else {
-        return res.status(200).send('Invalid product')
+        var cart = await CartModel.create({})
       }
+    }
+   
+    if (experience !== null) {
+      cart.experience.push(req.params.productId)
+    } else if (article !== null) {
+      cart.article.push(req.params.productId)
+    } else if (takeaway !== null) {
+      cart.takeaway.push(req.params.productId)
+    } else {
+      return res.status(200).send('Invalid product')
+    } 
+    await cart.save()
 
-      await cart.save()
+    if(user) {
       user.cart = cart.id
       await user.save()
+    }
 
-      const showCart = await CartModel.findById(user.cart._id)
-      .populate({path: 'article', select: '-stock'}).populate('experience')
-      .populate({path: 'takeaway', select: '-cookingTime', populate: {path:'restaurant', select: 'name'}})
-      return res.status(200).json(showCart)
-    } 
-    res.status(200).send('Cannot process your petition')
+    const showCart = await CartModel.findById(cart.id)
+    .populate({path: 'article', select: '-stock'}).populate('experience')
+    .populate({path: 'takeaway', select: '-cookingTime', populate: {path:'restaurant', select: 'name'}})
+    return res.status(200).json(showCart)
   } catch (err) {
     console.error(err)
     res.status(500).send('Error adding product to cart')
@@ -46,12 +55,21 @@ async function addProductToCart (req, res) {
 
 async function viewMyCart (req, res) {
   try {
-    const user = await UserModel.findById(res.locals.user.id)
-    .populate({ path: 'cart', populate: { path: 'article', select: '-stock'} })
-    .populate({path: 'cart', populate: {path: 'experience'}})
-    .populate({path: 'cart', populate: {path: 'takeaway', select: '-cookingTime', populate: {path:'restaurant', select: 'name'}}})
+    if(res.locals.user) {
+      const user = await UserModel.findById(res.locals.user.id)
+      .populate({ path: 'cart', populate: { path: 'article', select: '-stock'} })
+      .populate({path: 'cart', populate: {path: 'experience'}})
+      .populate({path: 'cart', populate: {path: 'takeaway', select: '-cookingTime', populate: {path:'restaurant', select: 'name'}}})
 
-    res.status(200).json(user.cart)
+      return res.status(200).json(user.cart)
+    } else {
+      const cart = await CartModel.findById(req.body.cart)
+      .populate({ path: 'article', select: '-stock'})
+      .populate({path: 'experience'})
+      .populate({path: 'takeaway', select: '-cookingTime', populate: {path:'restaurant', select: 'name'}})
+
+      return res.status(200).json(cart)
+    }
   } catch (err) {
     console.error(err)
     res.status(500).send('Error showing cart')
@@ -61,6 +79,9 @@ async function viewMyCart (req, res) {
 async function deleteCartProduct (req, res) {
   try {
     const cart = await CartModel.findById(req.params.cartId)
+    .populate({ path: 'article', select: '-stock'})
+    .populate({path: 'experience'})
+    .populate({path: 'takeaway', select: '-cookingTime', populate: {path:'restaurant', select: 'name'}})
     const experience = await ExperienceModel.findById(req.params.productId)
     const article = await ArticleModel.findById(req.params.productId)
     const takeaway = await TakeawayModel.findById(req.params.productId)
@@ -68,27 +89,31 @@ async function deleteCartProduct (req, res) {
     if (experience !== null) {
       const index = cart.experience.findIndex(elem => elem._id.toString() === req.params.productId)
       cart.experience.splice(index, 1)
-      await cart.save()
-
-      return res.status(200).json(cart)
     } else if (article !== null) {
       const index = cart.article.findIndex(elem => elem._id.toString() === req.params.productId)
       cart.article.splice(index, 1)
-      await cart.save()
-
-      return res.status(200).json(cart)
     } else if (takeaway !== null) {
       const index = cart.takeaway.findIndex(elem => elem._id.toString() === req.params.productId)
       cart.takeaway.splice(index, 1)
-      await cart.save()
-
-      return res.status(200).json(cart)
     } else {
-      res.status(200).send('Invalid product')
+      return res.status(200).send('Invalid product')
     }
+    await cart.save()
+    
+    if(cart.experience[0] === undefined && cart.article[0] === undefined && cart.takeaway[0] === undefined ) {
+      await CartModel.findByIdAndDelete(cart.id)
+
+      if(res.locals.user) {
+        const user = await UserModel.findById(res.locals.user.id)
+        user.cart = undefined
+        await user.save()
+      }
+      return res.status(200).send('Your cart is empty now')
+    }
+    res.status(200).json(cart)
   } catch (err) {
     console.error(err)
-    res.status(500).send('Error deleting cart')
+    res.status(500).send('Error deleting cart product')
   }
 }
 

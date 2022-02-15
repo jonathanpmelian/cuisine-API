@@ -4,25 +4,29 @@ const CartModel = require('../models/cart.model')
 
 async function createOrder (req, res) {
   try {
-    const user = await UserModel.findById(res.locals.user.id)
-
-    if (user.cart === undefined) {
-      return res.status(200).send('Your cart is empty')
-    }
-    if (user) {
+    if(res.locals.user) {
+      var user = await UserModel.findById(res.locals.user.id)
+      if (user.cart === undefined) {
+       return res.status(200).send('Your cart is empty')
+      }
       req.body.cart = user.cart
       req.body.email = user.email
     }
-
+    
     const order = await OrderModel.create(req.body)
-    await order.save()
-    user.order.push(order.id)
-    await user.save()
+    
+    if(res.locals.user) {
+      user.order.push(order.id)
+     await user.save()
+    }
+    
+    await CartModel.findByIdAndRemove(req.body.cart)
 
-    await CartModel.findByIdAndRemove(user.cart._id)
-    user.cart = undefined
-    await user.save()
-
+    if(res.locals.user) {
+      user.cart = undefined
+      await user.save()
+    }
+    
     res.status(200).json(order)
   } catch (err) {
     console.error(err)

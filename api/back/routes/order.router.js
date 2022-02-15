@@ -2,7 +2,8 @@ const router = require('express').Router()
 
 const {
   checkAuth,
-  checkAdmin
+  checkAdmin,
+  checkIf
 } = require('../utils/index')
 
 const {
@@ -13,7 +14,7 @@ const {
   deleteOneOrder
 } = require('../controllers/order.controller')
 
-router.post('/', checkAuth, createOrder)
+router.post('/', checkIf, createOrder)
 router.get('/', checkAuth, showAllOrders)
 router.get('/:orderId', checkAuth, showOneOrder)
 router.put('/:orderId', checkAuth, checkAdmin, editOneOrder)
