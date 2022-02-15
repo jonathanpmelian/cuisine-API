@@ -51,10 +51,10 @@ const restaurantSchema = new mongoose.Schema({
   totalCapacity: {
     type: Number
   },
-  order: {
+  takeaway: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'order'
-  }
+    ref: 'takeaway'
+  }]
 })
 
 const RestaurantModel = mongoose.model('restaurant', restaurantSchema)

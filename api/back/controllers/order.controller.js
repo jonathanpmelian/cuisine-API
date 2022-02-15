@@ -1,6 +1,9 @@
 const OrderModel = require('../models/order.model')
 const UserModel = require('../models/user.model')
 const CartModel = require('../models/cart.model')
+const ArticleModel = require('../models/article.model')
+const RestaurantModel = require('../models/restaurant.model')
+const TakeawayModel = require('../models/takeaway.model')
 
 async function createOrder (req, res) {
   try {
@@ -24,7 +27,25 @@ async function createOrder (req, res) {
       req.body.takeaway = cart.takeaway
       req.body.totalPrice = cart.totalPrice
     }
-
+    //Manage Article Stock
+    for(let i = 0 ; i < req.body.article.length ; i++) {
+      const article = await ArticleModel.findById(req.body.article[i]._id)
+      article.stock -= 1
+      await article.save()
+    }
+    //Manage takeaway
+    if(req.body.takeaway[0] !== undefined) {
+      let totalCookingTime = 0
+      for(let i = 0; i < req.body.takeaway.length; i ++) {
+        const takeaway = await TakeawayModel.findById(req.body.takeaway[i]._id)
+        const restaurant= await RestaurantModel.findById(takeaway.restaurant)
+        totalCookingTime += takeaway.cookingTime
+        restaurant.takeaway.push(takeaway)
+        await restaurant.save()
+      }
+      req.body.takeawayDelivery = `Your delivery will be ready in ${totalCookingTime} minutes`
+    }
+    //Create Order
     const order = await OrderModel.create(req.body)
 
     if (res.locals.user) {

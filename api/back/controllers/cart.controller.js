@@ -32,8 +32,12 @@ async function addProductToCart (req, res) {
       cart.experience.push(req.params.productId)
       cart.totalPrice += experience.price
     } else if (article !== null) {
-      cart.article.push(req.params.productId)
-      cart.totalPrice += article.price
+      if(article.stock > 0) {
+        cart.article.push(req.params.productId)
+        cart.totalPrice += article.price
+      } else {
+        return res.status(200).send('Article not available')
+      }
     } else if (takeaway !== null) {
       cart.takeaway.push(req.params.productId)
       cart.totalPrice += takeaway.price
