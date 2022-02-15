@@ -11,47 +11,32 @@ async function addProductToCart (req, res) {
     const takeaway = await TakeawayModel.findById(req.params.productId)
     const user = await UserModel.findById(res.locals.user.id)
 
-    if (user && user.cart === undefined) {
-      const cart = await CartModel.create({})
-      await cart.save()
-
+    if (user) {
+      if(user.cart === undefined) {
+        var cart = await CartModel.create({})
+      } else {
+        var cart = await CartModel.findById(user.cart._id)
+      }
+    
       if (experience !== null) {
         cart.experience.push(req.params.productId)
-        await cart.save()
       } else if (article !== null) {
         cart.article.push(req.params.productId)
-        await cart.save()
       } else if (takeaway !== null) {
         cart.takeaway.push(req.params.productId)
-        await cart.save()
       } else {
         return res.status(200).send('Invalid product')
       }
 
+      await cart.save()
       user.cart = cart.id
       await user.save()
 
-      const showCartPopulated = await CartModel.findById(user.cart._id.toString()).populate('experience takeaway article')
-      return res.status(200).json(showCartPopulated)
-    } else if (user) {
-      const cart = await CartModel.findById(user.cart._id.toString())
-
-      if (experience !== null) {
-        cart.experience.push(req.params.productId)
-        await cart.save()
-      } else if (article !== null) {
-        cart.article.push(req.params.productId)
-        await cart.save()
-      } else if (takeaway !== null) {
-        cart.takeaway.push(req.params.productId)
-        await cart.save()
-      } else {
-        return res.status(200).send('Invalid product')
-      }
-
-      const showCartPopulated = await CartModel.findById(user.cart._id.toString()).populate('experience takeaway article')
-      return res.status(200).json(showCartPopulated)
-    }
+      const showCart = await CartModel.findById(user.cart._id)
+      .populate({path: 'article', select: '-stock'}).populate('experience')
+      .populate({path: 'takeaway', select: '-cookingTime', populate: {path:'restaurant', select: 'name'}})
+      return res.status(200).json(showCart)
+    } 
     res.status(200).send('Cannot process your petition')
   } catch (err) {
     console.error(err)
@@ -61,7 +46,10 @@ async function addProductToCart (req, res) {
 
 async function viewMyCart (req, res) {
   try {
-    const user = await UserModel.findById(res.locals.user.id).populate({ path: 'cart', populate: { path: 'article experience takeaway' } })
+    const user = await UserModel.findById(res.locals.user.id)
+    .populate({ path: 'cart', populate: { path: 'article', select: '-stock'} })
+    .populate({path: 'cart', populate: {path: 'experience'}})
+    .populate({path: 'cart', populate: {path: 'takeaway', select: '-cookingTime', populate: {path:'restaurant', select: 'name'}}})
 
     res.status(200).json(user.cart)
   } catch (err) {

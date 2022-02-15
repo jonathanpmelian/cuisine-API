@@ -1,4 +1,5 @@
 const ArticleModel = require('../models/article.model')
+const UserModel = require('../models/user.model')
 
 async function createArticle (req, res) {
   try {
@@ -14,9 +15,21 @@ async function createArticle (req, res) {
 
 async function showAllArticles (req, res) {
   try {
-    const articles = await ArticleModel.find(req.query).sort({ stock: 0 }).limit(req.query.limit)
-
-    res.status(200).json(articles)
+    if(res.locals.user === undefined) {
+      const articles = await ArticleModel.find(req.query, {__v: 0, stock: 0}).sort({ stock: 0 }).limit(req.query.limit)
+      return res.status(200).json(articles)
+    } else {
+      const user = await UserModel.findById(res.locals.user.id)
+      console.log(user.role)
+      if(user.role === 'Admin') {
+        const articles = await ArticleModel.find(req.query, {__v: 0}).sort({ stock: 0 }).limit(req.query.limit)
+        return res.status(200).json(articles)
+      } else {
+        const articles = await ArticleModel.find(req.query, {__v: 0, stock: 0}).sort({ stock: 0 }).limit(req.query.limit)
+        return res.status(200).json(articles)
+      }
+    }
+    
   } catch (err) {
     console.error(err)
     res.status(500).send(`Error showing articles: ${err}`)
@@ -25,9 +38,20 @@ async function showAllArticles (req, res) {
 
 async function showOneArticle (req, res) {
   try {
-    const article = await ArticleModel.findById(req.params.articleId)
-
-    res.status(200).json(article)
+    if(res.locals.user === undefined) {
+      const articles = await ArticleModel.findById(req.params.articleId, {__v: 0, stock: 0}).sort({ stock: 0 }).limit(req.query.limit)
+      return res.status(200).json(articles)
+    } else {
+      const user = await UserModel.findById(res.locals.user.id)
+      console.log(user.role)
+      if(user.role === 'Admin') {
+        const articles = await ArticleModel.findById(req.params.articleId, {__v: 0}).sort({ stock: 0 }).limit(req.query.limit)
+        return res.status(200).json(articles)
+      } else {
+        const articles = await ArticleModel.findById(req.params.articleId, {__v: 0, stock: 0}).sort({ stock: 0 }).limit(req.query.limit)
+        return res.status(200).json(articles)
+      }
+    }
   } catch (err) {
     console.error(err)
     res.status(500).send(`Error showing article: ${err}`)

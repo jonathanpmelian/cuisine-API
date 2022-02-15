@@ -14,7 +14,7 @@ const reservationSchema = new mongoose.Schema({
     }
   },
   month: {
-    type: String,
+    type: Number,
     required: [true, 'Month is required'],
     min: 1,
     max: 12

@@ -2,7 +2,7 @@ const TakeawayModel = require('../models/takeaway.model')
 
 async function showAllTakeaway (req, res) {
   try {
-    const takeaways = await TakeawayModel.find(req.query)
+    const takeaways = await TakeawayModel.find(req.query, {cookingTime: 0}).populate({path: 'restaurant', select: 'name'})
 
     res.status(200).json(takeaways)
   } catch (err) {
@@ -13,7 +13,7 @@ async function showAllTakeaway (req, res) {
 
 async function showOneTakeaway (req, res) {
   try {
-    const takeaway = await TakeawayModel.findById(req.params.productId)
+    const takeaway = await TakeawayModel.findById(req.params.productId, {cookingTime: 0}).populate({path: 'restaurant', select: 'name'})
 
     res.status(200).json(takeaway)
   } catch (err) {

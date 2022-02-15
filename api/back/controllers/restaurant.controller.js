@@ -15,7 +15,7 @@ async function createRestaurant (req, res) {
 
 async function showAllRestaurants (req, res) {
   try {
-    const restaurant = await RestaurantModel.find().populate('reservation')
+    const restaurant = await RestaurantModel.find({}, {reservation: 0, hourCapacity: 0, totalCapacity: 0})
 
     res.status(200).json(restaurant)
   } catch (err) {
@@ -26,7 +26,7 @@ async function showAllRestaurants (req, res) {
 
 async function showOneRestaurant (req, res) {
   try {
-    const restaurant = await RestaurantModel.findById(req.params.restaurantId)
+    const restaurant = await RestaurantModel.findById(req.params.restaurantId, {reservation: 0, hourCapacity: 0, totalCapacity: 0})
 
     res.status(200).json(restaurant)
   } catch (err) {

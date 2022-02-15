@@ -2,7 +2,8 @@ const router = require('express').Router()
 
 const {
   checkAuth,
-  checkAdmin
+  checkAdmin,
+  checkIf
 } = require('../utils/index')
 
 const {
@@ -14,8 +15,8 @@ const {
 } = require('../controllers/article.controller')
 
 router.post('/', checkAuth, checkAdmin, createArticle)
-router.get('/', showAllArticles)
-router.get('/:articleId', showOneArticle)
+router.get('/', checkIf, showAllArticles)
+router.get('/:articleId', checkIf, showOneArticle)
 router.put('/:articleId', checkAuth, checkAdmin, editOneArticle)
 router.delete('/:articleId', checkAuth, checkAdmin, deleteOneArticle)
 

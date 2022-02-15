@@ -19,7 +19,7 @@ async function createOrder (req, res) {
     user.order.push(order.id)
     await user.save()
 
-    await CartModel.findByIdAndRemove(user.cart._id.toString())
+    await CartModel.findByIdAndRemove(user.cart._id)
     user.cart = undefined
     await user.save()
 

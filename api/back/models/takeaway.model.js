@@ -42,7 +42,7 @@ const takeawaySchema = new mongoose.Schema({
   restaurant: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'restaurant',
-    required: true
+    required: [true, 'Restaurant is required']
   }
 })
 
