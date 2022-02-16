@@ -19,7 +19,7 @@ async function showAllRestaurants (req, res) {
     res.status(200).json(restaurant)
   } catch (err) {
     console.error(err)
-    res.status(500).send('Error showing all restaurants')
+    res.status(500).send(`Error showing all restaurants: ${err}`)
   }
 }
 
@@ -30,7 +30,7 @@ async function showOneRestaurant (req, res) {
     res.status(200).json(restaurant)
   } catch (err) {
     console.error(err)
-    res.status(500).send('Error showing one restaurant')
+    res.status(500).send(`Error showing one restaurant: ${err}`)
   }
 }
 
@@ -41,7 +41,7 @@ async function editOneRestaurant (req, res) {
     res.status(200).json(restaurant)
   } catch (err) {
     console.error(err)
-    res.status(500).send('Error editing one restaurant')
+    res.status(500).send(`Error editing one restaurant: ${err}`)
   }
 }
 
@@ -52,7 +52,7 @@ async function deleteOneRestaurant (req, res) {
     res.status(200).json('Restaurant has been deleted')
   } catch (err) {
     console.error(err)
-    res.status(500).send('Error deleting one restautant')
+    res.status(500).send(`Error deleting one restautant: ${err}`)
   }
 }
 
@@ -63,7 +63,7 @@ async function showOneRestaurantMenu (req, res) {
     res.status(200).json(restaurant.menu)
   } catch (err) {
     console.error(err)
-    res.status(500).send('Error showing restaurant menu')
+    res.status(500).send(`Error showing restaurant menu: ${err}`)
   }
 }
 

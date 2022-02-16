@@ -7,14 +7,11 @@ async function createReservation (req, res) {
     const restaurant = await RestaurantModel.findById(req.params.restaurantId).populate('reservation')
     req.body.restaurant = restaurant.id
 
-    const match = restaurant.reservation.filter(elem => 
-    elem.year === req.body.year && elem.month === req.body.month && elem.day === req.body.day && elem.hour === req.body.hour)
-    
-    let sumPeep = match.reduce((p, c) => c.people +p, 0)
-    
+    let sumPeep = restaurant.reservation.reduce((p, c) => c.year === req.body.year && c.month === req.body.month && c.day === req.body.day && c.hour === req.body.hour ? c.people + p : p, 0)
+
     sumPeep += req.body.people
-    
-    if(sumPeep < restaurant.hourCapacity) {
+
+    if (sumPeep <= restaurant.hourCapacity) {
       const booking = await ReservationModel.create(req.body)
       await booking.save()
 
@@ -40,12 +37,12 @@ async function createReservation (req, res) {
 
 async function showReservations (req, res) {
   try {
-    const reservation = await ReservationModel.find({ restaurant: req.params.restaurantId }).populate({ path: 'restaurant', select: 'name' })
+    const reservation = await ReservationModel.find({ restaurant: req.params.restaurantId }).populate({ path: 'restaurant', select: 'name' }).where('day').equals(req.query.day).where('month').equals(req.query.month).where('year').equals(req.query.year)
 
     res.status(200).json(reservation)
   } catch (err) {
     console.error(err)
-    res.status(500).send('Error showing reservations')
+    res.status(500).send(`Error showing all reservations: ${err}`)
   }
 }
 
@@ -56,7 +53,7 @@ async function showOneReservation (req, res) {
     res.status(200).json(reservation)
   } catch (err) {
     console.error(err)
-    res.status(500).send('Error showing reservation')
+    res.status(500).send(`Error showing reservation: ${err}`)
   }
 }
 
@@ -68,7 +65,7 @@ async function editReservation (req, res) {
     res.status(200).send(reservation)
   } catch (err) {
     console.error(err)
-    res.status(500).send('Error updating reservation')
+    res.status(500).send(`Error updating reservation: ${err}`)
   }
 }
 
@@ -101,7 +98,7 @@ async function deleteReservation (req, res) {
     }
   } catch (err) {
     console.error(err)
-    res.status(500).send('Error deliting reservation')
+    res.status(500).send(`Error deliting reservation: ${err}`)
   }
 }
 

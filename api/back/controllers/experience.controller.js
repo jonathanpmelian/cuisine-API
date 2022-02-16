@@ -24,7 +24,7 @@ async function showAllExperiences (req, res) {
     res.status(200).json(experiences)
   } catch (err) {
     console.error(err)
-    res.status(500).send(`Error showing experiences: ${err}`)
+    res.status(500).send(`Error showing all experiences: ${err}`)
   }
 }
 

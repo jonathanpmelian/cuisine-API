@@ -32,7 +32,7 @@ async function addProductToCart (req, res) {
       cart.experience.push(req.params.productId)
       cart.totalPrice += experience.price
     } else if (article !== null) {
-      if(article.stock > 0) {
+      if (article.stock > 0) {
         cart.article.push(req.params.productId)
         cart.totalPrice += article.price
       } else {
@@ -53,12 +53,12 @@ async function addProductToCart (req, res) {
     }
 
     const showCart = await CartModel.findById(cart.id)
-    .populate({ path: 'article', select: '-stock' }).populate('experience')
-    .populate({ path: 'takeaway', select: '-cookingTime', populate: { path: 'restaurant', select: 'name' } })
+      .populate({ path: 'article', select: '-stock' }).populate('experience')
+      .populate({ path: 'takeaway', select: '-cookingTime', populate: { path: 'restaurant', select: 'name' } })
     return res.status(200).json(showCart)
   } catch (err) {
     console.error(err)
-    res.status(500).send('Error adding product to cart')
+    res.status(500).send(`Error adding product to cart: ${err}`)
   }
 }
 
@@ -81,7 +81,7 @@ async function viewMyCart (req, res) {
     }
   } catch (err) {
     console.error(err)
-    res.status(500).send('Error showing cart')
+    res.status(500).send(`Error showing cart: ${err}`)
   }
 }
 
@@ -126,7 +126,7 @@ async function deleteCartProduct (req, res) {
     res.status(200).json(cart)
   } catch (err) {
     console.error(err)
-    res.status(500).send('Error deleting cart product')
+    res.status(500).send(`Error deleting cart product: ${err}`)
   }
 }
 

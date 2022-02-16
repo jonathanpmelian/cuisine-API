@@ -15,7 +15,7 @@ const orderSchema = new mongoose.Schema({
     type: Number
   },
   deliveryHour: {
-    type: Number
+    type: String
   },
   email: {
     type: String,

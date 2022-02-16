@@ -20,7 +20,7 @@ async function showAllArticles (req, res) {
       return res.status(200).json(articles)
     } else {
       const user = await UserModel.findById(res.locals.user.id)
-      
+
       if (user.role === 'Admin') {
         const articles = await ArticleModel.find(req.query, { __v: 0 }).sort({ stock: 0 }).limit(req.query.limit)
         return res.status(200).json(articles)
@@ -31,7 +31,7 @@ async function showAllArticles (req, res) {
     }
   } catch (err) {
     console.error(err)
-    res.status(500).send(`Error showing articles: ${err}`)
+    res.status(500).send(`Error showing all articles: ${err}`)
   }
 }
 
@@ -42,7 +42,7 @@ async function showOneArticle (req, res) {
       return res.status(200).json(articles)
     } else {
       const user = await UserModel.findById(res.locals.user.id)
-      
+
       if (user.role === 'Admin') {
         const articles = await ArticleModel.findById(req.params.articleId, { __v: 0 }).sort({ stock: 0 }).limit(req.query.limit)
         return res.status(200).json(articles)
@@ -53,7 +53,7 @@ async function showOneArticle (req, res) {
     }
   } catch (err) {
     console.error(err)
-    res.status(500).send(`Error showing article: ${err}`)
+    res.status(500).send(`Error showing one article: ${err}`)
   }
 }
 

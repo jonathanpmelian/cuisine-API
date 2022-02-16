@@ -7,7 +7,7 @@ async function showAllTakeaway (req, res) {
     res.status(200).json(takeaways)
   } catch (err) {
     console.error(err)
-    res.status(500).send(`Error showing takeaways: ${err}`)
+    res.status(500).send(`Error showing all takeaways: ${err}`)
   }
 }
 

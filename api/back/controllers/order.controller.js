@@ -9,7 +9,7 @@ async function createOrder (req, res) {
   try {
     if (res.locals.user) {
       var user = await UserModel.findById(res.locals.user.id)
-   
+
       if (user.cart === undefined) {
         return res.status(200).send('Your cart is empty')
       }
@@ -27,25 +27,25 @@ async function createOrder (req, res) {
       req.body.takeaway = cart.takeaway
       req.body.totalPrice = cart.totalPrice
     }
-    //Manage Article Stock
-    for(let i = 0 ; i < req.body.article.length ; i++) {
+    // Manage Article Stock
+    for (let i = 0; i < req.body.article.length; i++) {
       const article = await ArticleModel.findById(req.body.article[i]._id)
       article.stock -= 1
       await article.save()
     }
-    //Manage takeaway
-    if(req.body.takeaway[0] !== undefined) {
+    // Manage takeaway
+    if (req.body.takeaway[0] !== undefined) {
       let totalCookingTime = 0
-      for(let i = 0; i < req.body.takeaway.length; i ++) {
+      for (let i = 0; i < req.body.takeaway.length; i++) {
         const takeaway = await TakeawayModel.findById(req.body.takeaway[i]._id)
-        const restaurant= await RestaurantModel.findById(takeaway.restaurant)
+        const restaurant = await RestaurantModel.findById(takeaway.restaurant)
         totalCookingTime += takeaway.cookingTime
         restaurant.takeaway.push(takeaway)
         await restaurant.save()
       }
       req.body.takeawayDelivery = `Your delivery will be ready in ${totalCookingTime} minutes`
     }
-    //Create Order
+    // Create Order
     const order = await OrderModel.create(req.body)
 
     if (res.locals.user) {
@@ -69,10 +69,10 @@ async function createOrder (req, res) {
 
 async function showAllOrders (req, res) {
   try {
-    const user = await UserModel.findById(res.locals.user.id).populate({path: 'order', select: '-cart'})
+    const user = await UserModel.findById(res.locals.user.id).populate({ path: 'order', select: '-cart' })
 
     if (user.role === 'Admin') {
-      const order = await OrderModel.find(req.query, {cart: 0}).sort({ status: 0 })
+      const order = await OrderModel.find(req.query, { cart: 0 }).sort({ status: 0 })
 
       return res.status(200).json(order)
     } else {
@@ -80,13 +80,13 @@ async function showAllOrders (req, res) {
     }
   } catch (err) {
     console.error(err)
-    res.status(500).send(`Error showing orders: ${err}`)
+    res.status(500).send(`Error showing all orders: ${err}`)
   }
 }
 
 async function showOneOrder (req, res) {
   try {
-    const order = await OrderModel.findById(req.params.orderId, {cart: 0})
+    const order = await OrderModel.findById(req.params.orderId, { cart: 0 })
 
     res.status(200).json(order)
   } catch (err) {
