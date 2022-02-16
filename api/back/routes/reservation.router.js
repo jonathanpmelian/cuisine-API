@@ -1,10 +1,10 @@
 const router = require('express').Router({ mergeParams: true })
 
-const { 
-  checkAuth, 
+const {
+  checkAuth,
   checkAdmin,
   checkIf
- } = require('../utils')
+} = require('../utils')
 
 const {
   createReservation,

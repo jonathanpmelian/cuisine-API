@@ -14,7 +14,7 @@ const reservationSchema = new mongoose.Schema({
     }
   },
   month: {
-    type: String,
+    type: Number,
     required: [true, 'Month is required'],
     min: 1,
     max: 12
@@ -33,7 +33,8 @@ const reservationSchema = new mongoose.Schema({
   },
   people: {
     type: Number,
-    required: [true, 'People is required']
+    required: [true, 'People is required'],
+    max: [6, 'Maximun 6, for higher reservation please call to the restaurant']
   },
   phone: {
     type: String,
@@ -63,10 +64,6 @@ const reservationSchema = new mongoose.Schema({
   validUntil: {
     type: Date,
     default: () => Date.now() + 60 * 60 * 1000 // 1 hour after reservation
-  },
-  experience: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'experience'
   }
 })
 

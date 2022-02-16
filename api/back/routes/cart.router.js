@@ -1,7 +1,7 @@
 const router = require('express').Router()
 
 const {
-  checkAuth
+  checkIf
 } = require('../utils/index')
 
 const {
@@ -10,8 +10,8 @@ const {
   deleteCartProduct
 } = require('../controllers/cart.controller')
 
-router.post('/:productId', checkAuth, addProductToCart)
-router.get('/', checkAuth, viewMyCart)
-router.delete('/:cartId/:productId', checkAuth, deleteCartProduct)
+router.post('/:productId', checkIf, addProductToCart)
+router.get('/', checkIf, viewMyCart)
+router.delete('/:cartId/:productId', checkIf, deleteCartProduct)
 
 module.exports = router

@@ -15,11 +15,11 @@ const orderSchema = new mongoose.Schema({
     type: Number
   },
   deliveryHour: {
-    type: Number
+    type: String
   },
   email: {
     type: String,
-    required: [true, 'Name is required'],
+    required: [true, 'Email is required'],
     validate: {
       validator: function (v) {
         return (/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/).test(v)
@@ -35,6 +35,21 @@ const orderSchema = new mongoose.Schema({
   address: {
     type: addressSchema,
     required: true
+  },
+  article: {
+    type: Array
+  },
+  experience: {
+    type: Array
+  },
+  takeaway: {
+    type: Array
+  },
+  totalPrice: {
+    type: Number
+  },
+  takeawayDelivery: {
+    type: String
   }
 })
 

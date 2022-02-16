@@ -2,7 +2,7 @@ const UserModel = require('../models/user.model')
 
 async function showAllUsers (req, res) {
   try {
-    const user = await UserModel.find()
+    const user = await UserModel.find({}, { password: 0 })
 
     res.status(200).json(user)
   } catch (err) {

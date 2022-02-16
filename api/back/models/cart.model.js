@@ -12,7 +12,10 @@ const cartSchema = new mongoose.Schema({
   takeaway: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'takeaway'
-  }]
+  }],
+  totalPrice: {
+    type: Number
+  }
 })
 
 const CartModel = mongoose.model('cart', cartSchema)

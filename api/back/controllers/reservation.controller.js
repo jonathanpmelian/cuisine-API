@@ -7,49 +7,53 @@ async function createReservation (req, res) {
     const restaurant = await RestaurantModel.findById(req.params.restaurantId).populate('reservation')
     req.body.restaurant = restaurant.id
 
-    // const totalOccupation = restaurant.reservation.reduce((p, c) => c.people + p, 0) + req.body.people
-    // const occupation = restaurant.reservation.reduce((p, c) => req.body.hour === c.hour ? c.people + p : p, 0) + req.body.people
+    let sumPeep = restaurant.reservation.reduce((p, c) => c.year === req.body.year && c.month === req.body.month && c.day === req.body.day && c.hour === req.body.hour ? c.people + p : p, 0)
 
-    const booking = await ReservationModel.create(req.body)
-    await booking.save()
+    sumPeep += req.body.people
 
-    restaurant.reservation.push(booking.id)
-    await restaurant.save()
+    if (sumPeep <= restaurant.hourCapacity) {
+      const booking = await ReservationModel.create(req.body)
+      await booking.save()
 
-    if(res.locals.user !== undefined) {
-      const user = await UserModel.findById(res.locals.user.id)
-      if (user) {
-        user.reservation.push(booking.id)
-        await user.save()
+      restaurant.reservation.push(booking.id)
+      await restaurant.save()
+
+      if (res.locals.user !== undefined) {
+        const user = await UserModel.findById(res.locals.user.id)
+        if (user) {
+          user.reservation.push(booking.id)
+          await user.save()
+        }
       }
+      return res.status(200).json(booking)
+    } else {
+      res.status(200).send('Date unavailable or Reservations higher than 6 persons please call to the restaurant')
     }
-    
-    res.status(200).json(booking)
   } catch (err) {
     console.error(err)
-    res.status(500).send('Error making a reservation')
+    res.status(500).send(`Error making a reservation: ${err}`)
   }
 }
 
 async function showReservations (req, res) {
   try {
-    const reservation = await ReservationModel.find({ restaurant: req.params.restaurantId }).populate('restaurant')
+    const reservation = await ReservationModel.find({ restaurant: req.params.restaurantId }).populate({ path: 'restaurant', select: 'name' }).where('day').equals(req.query.day).where('month').equals(req.query.month).where('year').equals(req.query.year)
 
     res.status(200).json(reservation)
   } catch (err) {
     console.error(err)
-    res.status(500).send('Error showing reservations')
+    res.status(500).send(`Error showing all reservations: ${err}`)
   }
 }
 
 async function showOneReservation (req, res) {
   try {
-    const reservation = await ReservationModel.findById(req.params.reservationId)
+    const reservation = await ReservationModel.findById(req.params.reservationId).populate({ path: 'restaurant', select: 'name' })
 
     res.status(200).json(reservation)
   } catch (err) {
     console.error(err)
-    res.status(500).send('Error showing reservation')
+    res.status(500).send(`Error showing reservation: ${err}`)
   }
 }
 
@@ -61,7 +65,7 @@ async function editReservation (req, res) {
     res.status(200).send(reservation)
   } catch (err) {
     console.error(err)
-    res.status(500).send('Error updating reservation')
+    res.status(500).send(`Error updating reservation: ${err}`)
   }
 }
 
@@ -94,7 +98,7 @@ async function deleteReservation (req, res) {
     }
   } catch (err) {
     console.error(err)
-    res.status(500).send('Error deliting reservation')
+    res.status(500).send(`Error deliting reservation: ${err}`)
   }
 }
 

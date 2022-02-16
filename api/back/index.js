@@ -22,6 +22,7 @@ const mongoose = require('mongoose')
       .use(morgan('dev'))
       .use(express.json())
       .use('/api', require('./routes/index'))
+      .use(express.static('assets'))
 
     const PORT = process.env.PORT || 8080
     app.listen(PORT, (err) => {

@@ -20,7 +20,7 @@ async function showAllAddress (req, res) {
     res.status(200).json(user.address)
   } catch (err) {
     console.error(err)
-    res.status(500).send(`Error showing address: ${err}`)
+    res.status(500).send(`Error showing all address: ${err}`)
   }
 }
 
@@ -32,7 +32,7 @@ async function showOneAddress (req, res) {
     res.status(200).json(address)
   } catch (err) {
     console.error(err)
-    res.status(500).send(`Error showing address: ${err}`)
+    res.status(500).send(`Error showing one address: ${err}`)
   }
 }
 
