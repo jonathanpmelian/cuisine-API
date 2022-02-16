@@ -48,9 +48,6 @@ const restaurantSchema = new mongoose.Schema({
     type: Number,
     required: [true, 'Capaticy is required']
   },
-  totalCapacity: {
-    type: Number
-  },
   takeaway: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'takeaway'

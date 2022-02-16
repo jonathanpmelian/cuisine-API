@@ -33,7 +33,8 @@ const reservationSchema = new mongoose.Schema({
   },
   people: {
     type: Number,
-    required: [true, 'People is required']
+    required: [true, 'People is required'],
+    max: [6, 'Maximun 6, for higher reservation please call to the restaurant']
   },
   phone: {
     type: String,
