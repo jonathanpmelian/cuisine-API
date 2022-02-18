@@ -6,6 +6,7 @@
 All API Request must be prepended with `/api/`
 
 ### Authentication Endpoints
+POSTMAN: https://documenter.getpostman.com/view/18826957/UVkjvHjh
 
 The Authentication flow for the application is:
  
@@ -15,6 +16,7 @@ POST   | /auth/signup     | NO    | -              | User Signup                
 POST   | /auth/login      | NO    | -              | User Login                 | `email`, `password`                             | `token`
 
 ### Profile Endpoints
+POSTMAN: https://documenter.getpostman.com/view/18826957/UVkjvHp3
 
 The Profile flow for the application is:
  
@@ -31,7 +33,7 @@ DELETE | /profile         | YES   |     Client     | Delete own profile         
 DELETE  | /profile/address/:addressId | YES | Client -Admin | Delete one direction |                                                |
 
 ### TakeAway Endpoints
-
+POSTMAN: https://documenter.getpostman.com/view/18826956/UVkjvHp6
 The Takeaway flow for the application is:
 
 METHOD | ENDPOINT         | TOKEN |     ROL        |  DESCRIPTION               | POST PARAMS                                     | RETURNS
@@ -43,7 +45,7 @@ POST   | /takeaway        | YES   | Admin          | Create a takeaway          
 DELETE | /takeaway/:takeawayId | YES | Admin       | Delete a takeaway          |                                                  |     
 
 ### Experience Endpoints
-
+POSTMAN: https://documenter.getpostman.com/view/18826957/UVkjvHjk
 The Experience flow for the application is:
 
 METHOD | ENDPOINT         | TOKEN |     ROL        |  DESCRIPTION               | POST PARAMS                                     | RETURNS
@@ -54,7 +56,7 @@ PUT    | /experience/:experienceId | YES | Admin   | Edit one experience        
 POST   | /experience      | YES   | Admin          | Create a experience        | `name`, `price`, `duration`                     | `experience`
 DELETE | /experience/:experienceId | YES | Admin   | Delete a expecience        |                                                 |                                
 ### Article Endpoints
-
+POSTMAN: https://documenter.getpostman.com/view/18826957/UVkjvHji
 The Article flow for the application is:
 
 METHOD | ENDPOINT         | TOKEN |     ROL        |  DESCRIPTION               | POST PARAMS                                     | RETURNS
@@ -66,7 +68,7 @@ POST   | /article         | YES   | Admin          | Create a article           
 DELETE | /article/:articleId | YES | Admin         | Delete a article           |                                                 |
 
 ### Restaurant Endpoints
-
+POSTMAN: https://documenter.getpostman.com/view/18826956/UVkjvHp4
 The Restaurant flow for the application is:
 
 METHOD | ENDPOINT         | TOKEN |     ROL        |  DESCRIPTION               | POST PARAMS                                     | RETURNS
@@ -84,7 +86,7 @@ DELETE | /restaurant/:restaurantId | YES | Admin  |  Delete a restauarnt
 DELETE | /restaurant/:restaurantId/reservation/:reservationId | YES | CLIENT | Delete a reservation |
 
 ### Order Endpoints
-
+POSTMAN: https://documenter.getpostman.com/view/18826957/UVkjvHjn
 The Order flow for the application is:
 
 METHOD | ENDPOINT         | TOKEN |     ROL        |  DESCRIPTION               | POST PARAMS                                     | RETURNS
@@ -96,7 +98,7 @@ POST   | /order           | YES   | Admin - Client | Create a order             
 DELETE | /order/:orderId  | YES   | Admin - Client | Delete a order             |                                                 |
 
 ### Cart Endpoints
-
+CART: https://documenter.getpostman.com/view/18826957/UVkjvHjj
 The Cart flow for the application is:
 
 METHOD | ENDPOINT         | TOKEN |     ROL        |  DESCRIPTION               | POST PARAMS                                     | RETURNS
@@ -106,7 +108,7 @@ POST   | /cart/:cartId    | YES   | Client - Admin | Add product to the cart    
 DETELE | /cart/:cartId    | YES   | Client - Admin | Detele a product cart      | -                                               | 
 
 ### Users Endpoints
-
+POSTMAN: https://documenter.getpostman.com/view/18826957/UVkjvHp7
 The Users flow for the application is:
 
 METHOD | ENDPOINT         | TOKEN |     ROL        |  DESCRIPTION               | POST PARAMS                                     | RETURNS
