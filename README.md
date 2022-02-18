@@ -1,6 +1,6 @@
 # cuisine-API
 
-[!image]
+![image](https://github.com/jonathanpmelian/cuisine-API/blob/develop/assets/images/DESCRIPTION.png)
 ## API Endpoints
 
 All API Request must be prepended with `/api/`
