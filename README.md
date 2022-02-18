@@ -1,5 +1,7 @@
 # cuisine-API
 
+Manage the backend of an updated multi-business website for hoteliers interested in expanding and managing their restaurant, shop, experience and delivery services.
+
 ![image](https://github.com/jonathanpmelian/cuisine-API/blob/develop/assets/images/DESCRIPTION.png)
 ## API Endpoints
 
@@ -59,6 +61,7 @@ POST   | /experience      | YES   | Admin          | Create a experience        
 DELETE | /experience/:experienceId | YES | Admin   | Delete a expecience        |                                                 |                                
 ### Article Endpoints
 POSTMAN: https://documenter.getpostman.com/view/18826957/UVkjvHji
+
 The Article flow for the application is:
 
 METHOD | ENDPOINT         | TOKEN |     ROL        |  DESCRIPTION               | POST PARAMS                                     | RETURNS
@@ -123,8 +126,21 @@ GET    | /users           | YES   | Admin          | View all users             
 PUT    | /users/:userId   | YES   | Admin          | Edit one user role         | `role`                                          | `user`
 DETELE | /users/:userId   | YES   | Admin          | Detele one user profile    | -                                               | 
 
+## Badges
 
-
-
+## Future updates
+Currently, for the next update we are working on:
+- Frontend connection
+## Authors
+#### Saul Solis
+solisrobayna@hotmail.com
+#### Jonathan Pulido
+jonathanpmelian@gmail.com
+## Contribution
+Contributions, issues, and feature requests are welcome!
+## License
+[MIT]()
+## Support
+Give a ⭐️ if you like this project!
 
 
