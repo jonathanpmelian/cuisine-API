@@ -133,13 +133,13 @@ Currently, for the next update we are working on:
 - Frontend connection
 ## Authors
 #### Saul Solis
-solisrobayna@hotmail.com
+solisrobayna@gmail.com
 #### Jonathan Pulido
 jonathanpmelian@gmail.com
 ## Contribution
 Contributions, issues, and feature requests are welcome!
 ## License
-[MIT]()
+[MIT](https://github.com/jonathanpmelian/cuisine-API/blob/develop/LICENSE)
 ## Support
 Give a ⭐️ if you like this project!
 
