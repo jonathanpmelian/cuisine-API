@@ -1,6 +1,6 @@
 # cuisine-API
 
-
+[!image]
 ## API Endpoints
 
 All API Request must be prepended with `/api/`
@@ -34,6 +34,7 @@ DELETE  | /profile/address/:addressId | YES | Client -Admin | Delete one directi
 
 ### TakeAway Endpoints
 POSTMAN: https://documenter.getpostman.com/view/18826956/UVkjvHp6
+
 The Takeaway flow for the application is:
 
 METHOD | ENDPOINT         | TOKEN |     ROL        |  DESCRIPTION               | POST PARAMS                                     | RETURNS
@@ -46,6 +47,7 @@ DELETE | /takeaway/:takeawayId | YES | Admin       | Delete a takeaway          
 
 ### Experience Endpoints
 POSTMAN: https://documenter.getpostman.com/view/18826957/UVkjvHjk
+
 The Experience flow for the application is:
 
 METHOD | ENDPOINT         | TOKEN |     ROL        |  DESCRIPTION               | POST PARAMS                                     | RETURNS
@@ -69,6 +71,7 @@ DELETE | /article/:articleId | YES | Admin         | Delete a article           
 
 ### Restaurant Endpoints
 POSTMAN: https://documenter.getpostman.com/view/18826956/UVkjvHp4
+
 The Restaurant flow for the application is:
 
 METHOD | ENDPOINT         | TOKEN |     ROL        |  DESCRIPTION               | POST PARAMS                                     | RETURNS
@@ -87,6 +90,7 @@ DELETE | /restaurant/:restaurantId/reservation/:reservationId | YES | CLIENT | D
 
 ### Order Endpoints
 POSTMAN: https://documenter.getpostman.com/view/18826957/UVkjvHjn
+
 The Order flow for the application is:
 
 METHOD | ENDPOINT         | TOKEN |     ROL        |  DESCRIPTION               | POST PARAMS                                     | RETURNS
@@ -99,6 +103,7 @@ DELETE | /order/:orderId  | YES   | Admin - Client | Delete a order             
 
 ### Cart Endpoints
 CART: https://documenter.getpostman.com/view/18826957/UVkjvHjj
+
 The Cart flow for the application is:
 
 METHOD | ENDPOINT         | TOKEN |     ROL        |  DESCRIPTION               | POST PARAMS                                     | RETURNS
@@ -109,6 +114,7 @@ DETELE | /cart/:cartId    | YES   | Client - Admin | Detele a product cart      
 
 ### Users Endpoints
 POSTMAN: https://documenter.getpostman.com/view/18826957/UVkjvHp7
+
 The Users flow for the application is:
 
 METHOD | ENDPOINT         | TOKEN |     ROL        |  DESCRIPTION               | POST PARAMS                                     | RETURNS
