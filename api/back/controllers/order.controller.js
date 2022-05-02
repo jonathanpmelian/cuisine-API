@@ -27,13 +27,23 @@ async function createOrder (req, res) {
       req.body.takeaway = cart.takeaway
       req.body.totalPrice = cart.totalPrice
     }
-    // Manage Article Stock
+    
+    let articleStockDisccount = 0
     for (let i = 0; i < req.body.article.length; i++) {
       const article = await ArticleModel.findById(req.body.article[i]._id)
-      article.stock -= 1
-      await article.save()
+      if(article.stock > 0) {
+        article.stock -= 1
+        articleStockDisccount += 1
+        await article.save()
+      } else {
+        for (let i = 0; i < articleStockDisccount - 1; i++) {
+          const article = await ArticleModel.findById(req.body.article[i]._id)
+          article.stock += 1
+        }
+        return res.status(200).send(`Sorry, only ${articleStockDisccount} ${article.name} available`)
+      }
     }
-    // Manage takeaway
+    
     if (req.body.takeaway[0] !== undefined) {
       let totalCookingTime = 0
       for (let i = 0; i < req.body.takeaway.length; i++) {
@@ -45,7 +55,7 @@ async function createOrder (req, res) {
       }
       req.body.takeawayDelivery = `Your delivery will be ready in ${totalCookingTime} minutes`
     }
-    // Create Order
+    
     const order = await OrderModel.create(req.body)
 
     if (res.locals.user) {

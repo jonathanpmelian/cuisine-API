@@ -29,7 +29,8 @@ const articleSchema = new mongoose.Schema({
   },
   stock: {
     type: Number,
-    required: [true, 'Stock is required']
+    required: [true, 'Stock is required'],
+    min: [0, 'Only numbers higher or equals 0']
   },
   supplier: {
     type: String,
