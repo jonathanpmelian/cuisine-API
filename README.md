@@ -1,8 +1,22 @@
-# cuisine-API
-
-Manage the backend of an updated multi-business website for hoteliers interested in expanding and managing their restaurant, shop, experience and delivery services.
+# CUISINE
+## Description
+Manage an updated multi-business website for hoteliers interested in expanding their restaurant, shop, experience and delivery services.
 
 ![image](https://github.com/jonathanpmelian/cuisine-API/blob/develop/assets/images/DESCRIPTION.png)
+## Future updates🌱
+Currently, for the next update we are working on:
+- Frontend connection
+## Badges
+![image](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)
+![image](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+![image](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)
+![image](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
+![image](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white)
+![image](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![image](https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white)
+![image](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
+![image](https://img.shields.io/badge/json-5E5C5C?style=for-the-badge&logo=json&logoColor=white)
+![image](https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E)
 ## API Endpoints
 
 All API Request must be prepended with `/api/`
@@ -126,11 +140,6 @@ GET    | /users           | YES   | Admin          | View all users             
 PUT    | /users/:userId   | YES   | Admin          | Edit one user role         | `role`                                          | `user`
 DETELE | /users/:userId   | YES   | Admin          | Detele one user profile    | -                                               | 
 
-## Badges
-
-## Future updates
-Currently, for the next update we are working on:
-- Frontend connection
 ## Authors
 #### Saul Solis
 solisrobayna@gmail.com
