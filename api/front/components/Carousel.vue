@@ -1,6 +1,6 @@
 <template>
         <v-carousel height="1000px">
-                <v-carousel-item>
+                <v-carousel-item class="item">
                   <img :src="require('~/assets/img1212.jpg')"><img/>
                 </v-carousel-item>
         </v-carousel>
