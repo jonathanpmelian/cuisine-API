@@ -2,11 +2,9 @@
   <v-app>
     <NavBar />
     <v-main>
-       <Nuxt />
+      <Nuxt />
     </v-main>
-    <v-footer>
-   <Footer />
-    </v-footer>
+    <Footer />
   </v-app>
 </template>
 
@@ -18,3 +16,5 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped></style>
