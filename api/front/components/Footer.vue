@@ -36,14 +36,32 @@
           </h6>
         </v-row>
         <v-row>
-          <ul class="lista">
-            <li><a href="">POLITICA DE PRIVACIDAD</a></li>
-            <li><a href="">AVISO LEGAL</a></li>
-            <li><a href="">POLÍTICA DE PRIVACIDAD</a></li>
-            <li><a href="">INFORMACIÓN DEL SERVICIO</a></li>
-            <li><a href="">TÉRMINOS DEL SERVICIO</a></li>
-            <li><a href="">POLÍTICA DE REEMBOLSO</a></li>
-          </ul>
+          <v-col>
+            <ul>
+              <v-row>
+                <v-col class="nowrap">
+                  <li>
+                    <a href="/politica-de-cookies">POLITICA DE COOKIES</a>
+                  </li>
+                </v-col>
+                <v-col class="nowrap">
+                  <li><a href="">AVISO LEGAL</a></li>
+                </v-col>
+                <v-col class="nowrap">
+                  <li><a href="">POLÍTICA DE PRIVACIDAD</a></li>
+                </v-col>
+                <v-col class="nowrap">
+                  <li><a href="">INFORMACIÓN DEL SERVICIO</a></li>
+                </v-col>
+                <v-col class="nowrap">
+                  <li><a href="">TÉRMINOS DEL SERVICIO</a></li>
+                </v-col>
+                <v-col class="nowrap">
+                  <li><a href="">POLÍTICA DE REEMBOLSO</a></li>
+                </v-col>
+              </v-row>
+            </ul>
+          </v-col>
         </v-row>
       </v-col>
       <v-col
@@ -52,13 +70,15 @@
         md="4"
         style="display: flex; align-items: center; justify-content: center"
       >
-        <a href="">
+        <a href="/">
           <img :src="require('~/assets/RESTAURANTE3.png')" height="300px"
         /></a>
       </v-col>
       <v-col cols="12" sm="12" md="4">
         <v-row>
           <h1>AYUDA</h1>
+        </v-row>
+        <v-row class="mt-6">
           <p class="texto">
             Seguro que la respuesta a tu pregunta se encuentra en nuestras
             <a href="" title="Preguntas frecuentes">preguntas frecuentes</a>.
@@ -83,6 +103,19 @@
             <strong> * Horario: de lunes a viernes (9:00 - 21:00) </strong>
           </p>
         </v-row>
+        <v-row justify="center" class="mt-10">
+          <v-btn
+            v-for="icon in icons"
+            :key="icon"
+            class="mx-4 black--text"
+            icon
+            tile
+          >
+            <v-icon size="24px">
+              {{ icon }}
+            </v-icon>
+          </v-btn>
+        </v-row>
       </v-col>
     </v-row>
   </v-footer>
@@ -103,5 +136,17 @@ export default {
 }
 .test2 {
   background-color: red;
+}
+a {
+  text-decoration: none;
+  color: black;
+  font-size: 12px;
+  font-weight: bold;
+}
+li {
+  list-style: none;
+}
+.nowrap {
+  white-space: nowrap;
 }
 </style>
