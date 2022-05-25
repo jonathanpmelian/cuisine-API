@@ -131,12 +131,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.test1 {
-  background-color: blue;
-}
-.test2 {
-  background-color: red;
-}
 a {
   text-decoration: none;
   color: black;
