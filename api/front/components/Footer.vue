@@ -45,19 +45,29 @@
                   </li>
                 </v-col>
                 <v-col class="nowrap">
-                  <li><a href="">AVISO LEGAL</a></li>
+                  <li><a href="/aviso-legal">AVISO LEGAL</a></li>
                 </v-col>
                 <v-col class="nowrap">
-                  <li><a href="">POLÍTICA DE PRIVACIDAD</a></li>
+                  <li>
+                    <a href="/politica-de-privacidad">POLÍTICA DE PRIVACIDAD</a>
+                  </li>
                 </v-col>
                 <v-col class="nowrap">
-                  <li><a href="">INFORMACIÓN DEL SERVICIO</a></li>
+                  <li>
+                    <a href="/informacion-del-servicio"
+                      >INFORMACIÓN DEL SERVICIO</a
+                    >
+                  </li>
                 </v-col>
                 <v-col class="nowrap">
-                  <li><a href="">TÉRMINOS DEL SERVICIO</a></li>
+                  <li>
+                    <a href="/terminos-del-servicio">TÉRMINOS DEL SERVICIO</a>
+                  </li>
                 </v-col>
                 <v-col class="nowrap">
-                  <li><a href="">POLÍTICA DE REEMBOLSO</a></li>
+                  <li>
+                    <a href="/politica-de-reembolso">POLÍTICA DE REEMBOLSO</a>
+                  </li>
                 </v-col>
               </v-row>
             </ul>
@@ -70,9 +80,29 @@
         md="4"
         style="display: flex; align-items: center; justify-content: center"
       >
-        <a href="/">
-          <img :src="require('~/assets/RESTAURANTE3.png')" height="300px"
-        /></a>
+        <v-row>
+          <v-col>
+            <a href="/">
+              <img :src="require('~/assets/RESTAURANTE3.png')" height="300px"
+            /></a>
+          </v-col>
+        </v-row>
+
+        <v-row justify="center" class="mt-10">
+          <v-col>
+            <v-btn
+              v-for="icon in icons"
+              :key="icon"
+              class="mx-4 black--text"
+              icon
+              tile
+            >
+              <v-icon size="24px">
+                {{ icon }}
+              </v-icon>
+            </v-btn>
+          </v-col>
+        </v-row>
       </v-col>
       <v-col cols="12" sm="12" md="4">
         <v-row>
@@ -102,19 +132,6 @@
           <p>
             <strong> * Horario: de lunes a viernes (9:00 - 21:00) </strong>
           </p>
-        </v-row>
-        <v-row justify="center" class="mt-10">
-          <v-btn
-            v-for="icon in icons"
-            :key="icon"
-            class="mx-4 black--text"
-            icon
-            tile
-          >
-            <v-icon size="24px">
-              {{ icon }}
-            </v-icon>
-          </v-btn>
         </v-row>
       </v-col>
     </v-row>
