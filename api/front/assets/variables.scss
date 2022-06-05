@@ -2,3 +2,16 @@
 //
 // The variables you want to modify
 // $font-size-root: 20px;
+.v-text-field__details {
+  display: none;
+}
+.v-text-field .v-text-field--enclosed .v-text-field__details {
+  margin-bottom: 0px;
+}
+.v-input--selection-controls {
+    margin-top: 0px;
+    padding-top: 0px;
+}
+.v-input__slot {
+  align-items: flex-start;
+}

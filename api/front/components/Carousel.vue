@@ -1,16 +1,14 @@
 <template>
-        <v-carousel height="1000px">
-                <v-carousel-item>
-                  <img :src="require('~/assets/img1212.jpg')"><img/>
-                </v-carousel-item>
-        </v-carousel>
+  <v-carousel height="100vh">
+    <v-carousel-item>
+      <v-sheet color="red" height="100%"></v-sheet>
+    </v-carousel-item>
+  </v-carousel>
 </template>
 <script>
-    export default {
-        name: 'Carousel'
-    }
+export default {
+  name: 'Carousel',
+}
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
